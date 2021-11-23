@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1059371314236",
+    "project_id": "bullt-a9681",
+    "storage_bucket": "bullt-a9681.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059371314236:android:3775b9848b2339c3fae739",
+        "android_client_info": {
+          "package_name": "com.example.bullt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059371314236-21jto8h9eflr0uckn6u17sjbldi1e0uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxfVT6UvYIEvR_tSvHPPJSZQlcvYNkaXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059371314236-21jto8h9eflr0uckn6u17sjbldi1e0uh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
