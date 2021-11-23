@@ -56,7 +56,7 @@
         android:background="@color/black"
         />
 
-    <ViewFlipper
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/image_slide"
         android:layout_width="match_parent"
         android:layout_height="270dp"/>
