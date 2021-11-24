@@ -28,7 +28,7 @@
         <activity
             android:name=".Fragment.HomeFragment"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Recycler.SplashActivity" >
+        <activity android:name= ".Recycler.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

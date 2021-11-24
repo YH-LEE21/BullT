@@ -6,11 +6,11 @@ public class Data {
     private String title;
     private String content;
     private String price;
-    private int resId;
+    private String resId;
     private String path;
     private boolean like;
 
-    public Data (String title,String content,String price,int resId,String path,boolean like){
+    public Data (String title,String content,String price,String resId,String path,boolean like){
         this.title = title;
         this.content = content;
         this.price = price;
@@ -44,11 +44,11 @@ public class Data {
         this.price = price;
     }
 
-    public int getResId() {
+    public String getResId() {
         return resId;
     }
 
-    public void setResId(int resId) {
+    public void setResId(String resId) {
         this.resId = resId;
     }
 

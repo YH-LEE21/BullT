@@ -1,6 +1,8 @@
 package com.example.bullt.HotItems;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +14,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bullt.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.ViewHolder>{
     private Context context;
-    private ArrayList<Data> mData = null;
+    private ArrayList<Data> item;
+    FirebaseStorage storage;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
@@ -35,6 +46,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
             price = itemView.findViewById(R.id.tv_price);
             like = itemView.findViewById(R.id.favorite_btn);
 
+
             //하트를 누를때 애니메이션
             BounceInterpolator bounceInterpolator;//애니메이션이 일어나는 동안의 회수, 속도를 조절하거나 시작과 종료시의 효과를 추가 할 수 있다
             scaleAnimation = new ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f);
@@ -46,7 +58,8 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
 
     public RecyclerAdapter2(Context context, ArrayList<Data> list){
         this.context = context;
-        mData = list;
+        item = list;
+        storage = FirebaseStorage.getInstance();
     }
 
     @Override
@@ -70,18 +83,37 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        String title = mData.get(position).getTitle();
-        String context = mData.get(position).getContent();
-        String price = mData.get(position).getPrice();
-        String path = mData.get(position).getPath();
-        boolean likes = mData.get(position).getLike();
-        int resId = mData.get(position).getResId();
+        String title = item.get(position).getTitle();
+        String content = item.get(position).getContent();
+        String price = item.get(position).getPrice();
+        boolean likes = item.get(position).getLike();
+        String resId = item.get(position).getResId();
 
         //viewHolder.imageView.setImageResource(resId);
         viewHolder.title.setText(title);
-        viewHolder.content.setText(context);
+        viewHolder.content.setText(content);
         viewHolder.price.setText(price);
+        StorageReference ref = FirebaseStorage.getInstance().getReference(item.get(position).getPath());
+        Log.d("레퍼런스", String.valueOf(ref));
+        ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                Log.d("레퍼런스a", String.valueOf(ref));
+//
+//                    Glide.with(context)
+//                            .load(task.getResult())
+////                        .placeholder(R.drawable.ic_baseline_replay_24)
+//                            .into(viewHolder.imageView);
 
+            }
+        });
+        
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //사진 누르면 그사진의 웹주소로 이동
+            }
+        });
         int count =0;
         //하트를 눌렀을 때
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -108,7 +140,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return item.size();
     }
 
 

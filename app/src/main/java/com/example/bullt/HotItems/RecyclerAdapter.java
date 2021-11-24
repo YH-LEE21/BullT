@@ -79,7 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String price = mData.get(position).getPrice();
         String path = mData.get(position).getPath();
         boolean likes = mData.get(position).getLike();
-        int resId = mData.get(position).getResId();
+        String resId = mData.get(position).getResId();
 
         //viewHolder.imageView.setImageResource(resId);
         viewHolder.title.setText(title);

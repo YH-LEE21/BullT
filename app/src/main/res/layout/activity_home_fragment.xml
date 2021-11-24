@@ -56,7 +56,7 @@
         android:background="@color/black"
         />
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/image_slide"
         android:layout_width="match_parent"
         android:layout_height="270dp"/>
@@ -71,21 +71,36 @@
         />
     <!--  로그인이 되어있지 않으면 보이지 않음  -->
 <!--  imagesize 개당 130w,martch_parent  -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
-        />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            >
+            <TableRow>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </TableRow>
+            </TableLayout>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                >
+                <TableRow>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    />
+                </TableRow>
+            </TableLayout>
     </LinearLayout>>
 </androidx.core.widget.NestedScrollView>
