@@ -99,6 +99,8 @@
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
+                    android:layout_gravity="center_horizontal"
+
                     />
                 </TableRow>
             </TableLayout>

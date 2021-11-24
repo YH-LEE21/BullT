@@ -53,8 +53,8 @@ public class HomeFragment extends Fragment {
     //자동 슬라이드 변수
     int currentPage = 0;
     Timer timer;
-    final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 7000; // time in milliseconds between successive task executions.
+    final long DELAY_MS = 300;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
     //ListItem_view
     RecyclerView recyclerView2;
@@ -145,7 +145,6 @@ public class HomeFragment extends Fragment {
                             Log.e("Bannerlist",String.valueOf(Bannerlist.size()));
                         }
                         pagerAdapter.notifyDataSetChanged();
-                        autoSlide();
                     }
                 }
             });
@@ -192,6 +191,7 @@ public class HomeFragment extends Fragment {
                 if(currentPage == 6) {
                     currentPage = 0;
                 }
+                Log.d("currentPage",String.valueOf(currentPage));
                 v_pager.setCurrentItem(currentPage++, true);
             }
         };
@@ -201,8 +201,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 handler.post(Update);
+
             }
-        }, DELAY_MS, PERIOD_MS);
+        },DELAY_MS,PERIOD_MS);
 
     }
 }

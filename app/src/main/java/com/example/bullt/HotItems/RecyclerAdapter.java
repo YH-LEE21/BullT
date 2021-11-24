@@ -64,7 +64,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //크기 조절
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = 300;
+        layoutParams.width = 305;
         layoutParams.height = 550;
         view.setLayoutParams(layoutParams);
         RecyclerAdapter.ViewHolder vh = new RecyclerAdapter.ViewHolder(view);

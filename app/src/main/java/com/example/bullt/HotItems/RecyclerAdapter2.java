@@ -1,5 +1,6 @@
 package com.example.bullt.HotItems;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -98,20 +99,30 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                Log.d("레퍼런스a", String.valueOf(ref));
-//
-//                    Glide.with(context)
-//                            .load(task.getResult())
-////                        .placeholder(R.drawable.ic_baseline_replay_24)
-//                            .into(viewHolder.imageView);
-
+                if(!task.isSuccessful()){
+                    Log.d("레퍼런스a", String.valueOf(ref));
+                }
+                else {
+                    Glide.with(context)
+                            .load(task.getResult())
+                        .placeholder(R.drawable.round)
+                            .into(viewHolder.imageView);
+                }
             }
         });
-        
-        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+
+        //Internet 이동동
+       viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //사진 누르면 그사진의 웹주소로 이동
+            }
+        });
+        //장바구니 담기 버튼 나오게 하기
+        viewHolder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
         int count =0;
