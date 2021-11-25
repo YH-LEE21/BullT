@@ -13,6 +13,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
             //하트를 누를때 애니메이션
             BounceInterpolator bounceInterpolator;//애니메이션이 일어나는 동안의 회수, 속도를 조절하거나 시작과 종료시의 효과를 추가 할 수 있다
             scaleAnimation = new ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f);
-            scaleAnimation.setDuration(5000);
+            scaleAnimation.setDuration(2000);
             bounceInterpolator = new BounceInterpolator();
             scaleAnimation.setInterpolator(bounceInterpolator);
         }
@@ -133,9 +134,11 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                 compoundButton.startAnimation(viewHolder.scaleAnimation);
                 if(isChecked){
                     viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+                    Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+                    Toast.makeText(context, "찜목록에 제외 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
 //                onStarClicked(firebaseDatabase.getReference().child("Postdata").child(postIdList.get(holder.getLayoutPosition()))); //찾고자 하는 게시글 id로 접근
                 // holder.getLayoutPosition() = 지금 화면에 떠있는 아이템의 번호(몇번째 아이템인지) //가장 위에 있는 게시글 부터 holder.getLayoutPosition() = 0

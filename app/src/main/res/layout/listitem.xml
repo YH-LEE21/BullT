@@ -55,4 +55,5 @@
         android:text="33000원"
         android:layout_marginLeft="10dp"
         />
+
 </LinearLayout>

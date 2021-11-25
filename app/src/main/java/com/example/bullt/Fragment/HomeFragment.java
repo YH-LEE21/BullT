@@ -23,7 +23,6 @@ import com.example.bullt.Banners.BannerPagerAdapter;
 import com.example.bullt.HotItems.Data;
 import com.example.bullt.HotItems.RecyclerAdapter;
 import com.example.bullt.HotItems.RecyclerAdapter2;
-import com.example.bullt.HotItems.RecyclerViewDecoration;
 import com.example.bullt.R;
 import com.example.bullt.Recycler.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -104,7 +103,6 @@ public class HomeFragment extends Fragment {
         list.add(d);
         RecyclerAdapter adapter = new RecyclerAdapter(getContext(), list);
         recyclerView1.setAdapter(adapter);
-        recyclerView1.addItemDecoration(new RecyclerViewDecoration(30));
 
         recyclerView2 =(RecyclerView)view.findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(getContext(),2));

@@ -42,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             //하트를 누를때 애니메이션
             BounceInterpolator bounceInterpolator;//애니메이션이 일어나는 동안의 회수, 속도를 조절하거나 시작과 종료시의 효과를 추가 할 수 있다
             scaleAnimation = new ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f);
-            scaleAnimation.setDuration(5000);
+            scaleAnimation.setDuration(2000);
             bounceInterpolator = new BounceInterpolator();
             scaleAnimation.setInterpolator(bounceInterpolator);
         }
