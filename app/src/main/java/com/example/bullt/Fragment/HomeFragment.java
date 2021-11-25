@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +19,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bullt.Banners.BannerData;
 import com.example.bullt.Banners.BannerPagerAdapter;
-import com.example.bullt.HotItems.Data;
-import com.example.bullt.HotItems.RecyclerAdapter;
-import com.example.bullt.HotItems.RecyclerAdapter2;
+import com.example.bullt.ListItems.Data;
+import com.example.bullt.ListItems.RecyclerAdapter;
+import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
 import com.example.bullt.Recycler.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,20 +47,26 @@ public class HomeFragment extends Fragment {
 
     //배너 이미지 정보 담은 리스트
     static ArrayList<BannerData> Bannerlist;
+    static ArrayList<Data> list_item;
     static ArrayList<Data> list_item2;
     private BannerPagerAdapter pagerAdapter;
 
     //자동 슬라이드 변수
     int currentPage = 0;
     Timer timer;
-    final long DELAY_MS = 300;//delay in milliseconds before task is to be executed
+    final long DELAY_MS = 0;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
+
+    //HotItem
+    RecyclerView recyclerView1;
+    private RecyclerAdapter adapter;
     //ListItem_view
     RecyclerView recyclerView2;
     private RecyclerAdapter2 adapter2;
 
-
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
 
     //돋보기 이미지,장바구니 이미지
     ImageView search_iv,cart_iv;
@@ -68,12 +75,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home_fragment, container, false);
         Bannerlist = new ArrayList<>();
+        list_item = new ArrayList<>();
         list_item2 = new ArrayList<>();
 //      여기 부분에는 firebase 스토리지와 연결 되어 있어야 함
         Setinit();
         FirebaseInit();
         autoSlide();
-
         return view;
     }
     //아이디 연결하는 함수
@@ -91,18 +98,12 @@ public class HomeFragment extends Fragment {
         });
         //장바구니 버튼
         cart_iv = view.findViewById(R.id.cart_iv);
-        RecyclerView recyclerView1 = (RecyclerView) view.findViewById(R.id.recyclerView1);
+
+
+
+
+        recyclerView1 = (RecyclerView) view.findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
-
-
-        //test
-        ArrayList<Data> list = new ArrayList<>();
-        Data d = new Data("회사명","상품명","27000","","",true);
-        list.add(d);
-        list.add(d);
-        list.add(d);
-        RecyclerAdapter adapter = new RecyclerAdapter(getContext(), list);
-        recyclerView1.setAdapter(adapter);
 
         recyclerView2 =(RecyclerView)view.findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -146,9 +147,28 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
+        Data d = new Data("회사명","상품명","27000","11","aa","1",true,0);
+        list_item.add(d);
+        list_item.add(d);
+        list_item.add(d);
+
+//                        Data Listitem = new Data();
+        adapter = new RecyclerAdapter(getContext(),list_item);
+        recyclerView1.setAdapter(adapter);
+
+        //로그인을 만들면 구현
+//        myRef.child("users").child(mAuth.getCurrentUser().getUid())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+//
+//                    }
+//                });
 
         adapter2 = new RecyclerAdapter2(getContext(),list_item2);
         recyclerView2.setAdapter(adapter2);
+
 
         myRef.child("ListItem").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -160,20 +180,27 @@ public class HomeFragment extends Fragment {
                     for (String keys : map.keySet()) {
                         Map<String, String> child = (Map<String, String>) map.get(keys);
 
-                        //상표명,내용,가격,주소,이미지 주소
+                        //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
                         String title = String.valueOf(child.get("title"));
                         String content = String.valueOf(child.get("content"));
                         String price =String.valueOf(child.get("price"))+"원";
                         String ref = String.valueOf(child.get("ref"));
+                        String image_id = String.valueOf(child.get("id"));
+                        int count = Integer.parseInt(String.valueOf(child.get("count")));
+
+
+
                         StorageReference storageRef = storage.getReference(child.get("ImagePath"));
 
-                        Data item = new Data(title,content,price,ref,storageRef.getPath(),false);
+                        Data item = new Data(title,content,price,ref,storageRef.getPath(),image_id,false,count);
+
                         list_item2.add(item);
 //                        new Data("회사명","상품명","27000",1,"",true);
 //                        Data Listitem = new Data();
 //                        Bannerlist.add(item);
                         Log.e("Bannerlist",String.valueOf(Bannerlist.size()));
                     }
+                    adapter.notifyDataSetChanged();
                     adapter2.notifyDataSetChanged();
                 }
             }

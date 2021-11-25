@@ -1,7 +1,7 @@
-package com.example.bullt.HotItems;
+package com.example.bullt.ListItems;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,11 +20,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.bullt.Fragment.HomeFragment;
 import com.example.bullt.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -33,12 +38,14 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
     private Context context;
     private ArrayList<Data> item;
     FirebaseStorage storage;
-
-
+    String userEmail;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         ToggleButton like;
         TextView title,content,price;
+
         public ScaleAnimation scaleAnimation;
         ViewHolder(View itemView){
             super(itemView);
@@ -62,14 +69,14 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         this.context = context;
         item = list;
         storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-
 
         View view = inflater.inflate(R.layout.listitem2,parent,false);
 
@@ -89,8 +96,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         String content = item.get(position).getContent();
         String price = item.get(position).getPrice();
         boolean likes = item.get(position).getLike();
-        String resId = item.get(position).getResId();
-
+        String imageID = item.get(position).getImageId();
         //viewHolder.imageView.setImageResource(resId);
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
@@ -106,7 +112,8 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                 else {
                     Glide.with(context)
                             .load(task.getResult())
-                        .placeholder(R.drawable.round)
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                            .placeholder(R.drawable.round)
                             .into(viewHolder.imageView);
                 }
             }
@@ -126,30 +133,43 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                 return false;
             }
         });
-        int count =0;
         //하트를 눌렀을 때
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 compoundButton.startAnimation(viewHolder.scaleAnimation);
                 if(isChecked){
-                    viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                    Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                    //로그인이 되있다면
+                    if(userEmail!=null){
+                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+                        Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                        myRef.child("ListItem").child(imageID).child("count").get().getResult();
+                    }
+                    //로그인이 안되있다면
+                    else{
+                        //로그인 페이지로 넘어감
+//                        Intent intent = new Intent(context.getApplicationContext(), LogInActivity.class);
+//                        context.startActivity(intent);
+                        Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
-                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-                    Toast.makeText(context, "찜목록에 제외 되었습니다.", Toast.LENGTH_SHORT).show();
+                    //로그인이 되있다면
+                    if(userEmail!=null){
+                        viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+                        Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    //로그인이 안되있다면
+                    else{
+                        //로그인 페이지로 넘어감
+//                      Intent intent = new Intent(context.getApplicationContext(), LogInActivity.class);
+//                      context.startActivity(intent);
+                        Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                    }
                 }
-//                onStarClicked(firebaseDatabase.getReference().child("Postdata").child(postIdList.get(holder.getLayoutPosition()))); //찾고자 하는 게시글 id로 접근
-                // holder.getLayoutPosition() = 지금 화면에 떠있는 아이템의 번호(몇번째 아이템인지) //가장 위에 있는 게시글 부터 holder.getLayoutPosition() = 0
-                /*지금 하트 누르면 sns 피드가 다시 재 갱신되서 애니메이션이 씹힌다. 그래서 갱신 방식을 새로고침을 원할때 새로고침 되는 방식으로 바꿔야 될것 같다. */
+
             }
         });
-        //하트를 눌렀을 때
-//                onStarClicked(firebaseDatabase.getReference().child("Postdata").child(postIdList.get(holder.getLayoutPosition()))); //찾고자 하는 게시글 id로 접근
-                /*지금 하트 누르면 sns 피드가 다시 재 갱신되서 애니메이션이 씹힌다. 그래서 갱신 방식을 새로고침을 원할때 새로고침 되는 방식으로 바꿔야 될것 같다. */
-        //연결하기
-        //viewHolder.
     }
 
     @Override

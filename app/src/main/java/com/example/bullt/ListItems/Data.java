@@ -1,4 +1,4 @@
-package com.example.bullt.HotItems;
+package com.example.bullt.ListItems;
 
 public class Data {
 
@@ -8,15 +8,25 @@ public class Data {
     private String price;
     private String resId;
     private String path;
-    private boolean like;
 
-    public Data (String title,String content,String price,String resId,String path,boolean like){
+
+
+    private String imageId;
+    private boolean like;
+    private int count;
+
+
+    public Data (String title, String content, String price, String resId, String path,String imageID, boolean like, int count){
+
         this.title = title;
         this.content = content;
         this.price = price;
+        this.imageId = imageID;
         this.resId = resId;
+
         this.path = path;
         this.like = like;
+        this.count = count;
     }
     public Data(){}
 
@@ -63,4 +73,23 @@ public class Data {
     public boolean getLike(){return like;}
 
     public void setLike(){this.like = like;}
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
 }
