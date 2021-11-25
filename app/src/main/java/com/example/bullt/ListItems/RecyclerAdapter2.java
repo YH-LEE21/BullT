@@ -55,6 +55,13 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
             price = itemView.findViewById(R.id.tv_price);
             like = itemView.findViewById(R.id.favorite_btn);
 
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(imageView.getTag().toString()));
+                    context.startActivity(intent);
+                }
+            });
 
             //하트를 누를때 애니메이션
             BounceInterpolator bounceInterpolator;//애니메이션이 일어나는 동안의 회수, 속도를 조절하거나 시작과 종료시의 효과를 추가 할 수 있다
@@ -97,7 +104,6 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         String price = item.get(position).getPrice();
         boolean likes = item.get(position).getLike();
         String imageID = item.get(position).getImageId();
-        //viewHolder.imageView.setImageResource(resId);
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
         viewHolder.price.setText(price);
@@ -112,27 +118,17 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                 else {
                     Glide.with(context)
                             .load(task.getResult())
-                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                            .fitCenter()
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
                             .placeholder(R.drawable.round)
                             .into(viewHolder.imageView);
                 }
             }
         });
 
+        viewHolder.imageView.setTag(item.get(position).getResId());
         //Internet 이동동
-       viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //사진 누르면 그사진의 웹주소로 이동
-            }
-        });
         //장바구니 담기 버튼 나오게 하기
-        viewHolder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
         //하트를 눌렀을 때
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

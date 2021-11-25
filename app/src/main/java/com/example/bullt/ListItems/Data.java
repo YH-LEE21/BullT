@@ -15,7 +15,6 @@ public class Data {
     private boolean like;
     private int count;
 
-
     public Data (String title, String content, String price, String resId, String path,String imageID, boolean like, int count){
 
         this.title = title;

@@ -47,6 +47,7 @@ public class BannerPagerAdapter extends RecyclerView.Adapter<BannerPagerAdapter.
             public void onComplete(@NonNull Task<Uri> task) {
                 Glide.with(context)
                         .load(task.getResult())
+                        .fitCenter()
                         //.placeholder(R.drawable.ic_loading)
                         .into(holder.iv_ads);
             }
@@ -68,8 +69,8 @@ public class BannerPagerAdapter extends RecyclerView.Adapter<BannerPagerAdapter.
                 @Override
                 public void onClick(View v) {
 
-//                    Intent intent = new Intent(context, WebViewActivity.class);
-//                    intent.putExtra("url", iv_ads.getTag().toString());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(iv_ads.getTag().toString()));
+                    context.startActivity(intent);
 //                    context.startActivity(intent);
                 }
             });

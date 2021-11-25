@@ -191,14 +191,9 @@ public class HomeFragment extends Fragment {
 
 
                         StorageReference storageRef = storage.getReference(child.get("ImagePath"));
-
+                        //제목,내용,가격,사이트주소,이미지주소,부모이름,like,count
                         Data item = new Data(title,content,price,ref,storageRef.getPath(),image_id,false,count);
-
                         list_item2.add(item);
-//                        new Data("회사명","상품명","27000",1,"",true);
-//                        Data Listitem = new Data();
-//                        Bannerlist.add(item);
-                        Log.e("Bannerlist",String.valueOf(Bannerlist.size()));
                     }
                     adapter.notifyDataSetChanged();
                     adapter2.notifyDataSetChanged();
@@ -213,7 +208,7 @@ public class HomeFragment extends Fragment {
         final Runnable Update = new Runnable() {
             @Override
             public void run() {
-                if(currentPage == 6) {
+                if(currentPage == 7) {
                     currentPage = 0;
                 }
                 Log.d("currentPage",String.valueOf(currentPage));

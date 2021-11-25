@@ -103,8 +103,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 else {
                     Glide.with(context)
                             .load(task.getResult())
-                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                            .fitCenter()
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(12)))
                             .placeholder(R.drawable.round)
+
                             .into(viewHolder.imageView);
                 }
             }
