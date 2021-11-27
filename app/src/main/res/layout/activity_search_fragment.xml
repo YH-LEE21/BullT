@@ -8,6 +8,9 @@
     android:orientation="vertical"
     >
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <SearchView
             android:id="@+id/SearchView1"
             android:layout_width="match_parent"
@@ -17,13 +20,70 @@
             tools:ignore="MissingConstraints"
             />
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="50dp"
             android:id="@+id/search_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/SearchResult_recycelrView"
+        </FrameLayout>
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            >
+
+                <TableRow>
+                        <Button
+                            android:id="@+id/clothes_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:id="@+id/pants_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:id="@+id/shoes_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                </TableRow>
+                <TableRow>
+                        <Button
+                            android:id="@+id/sweater_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:id="@+id/padding_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:id="@+id/etc_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                </TableRow>
+        </TableLayout>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            >
+                <TableRow>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/SearchResult_recycelrView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                </TableRow>
+        </TableLayout>
 </LinearLayout>

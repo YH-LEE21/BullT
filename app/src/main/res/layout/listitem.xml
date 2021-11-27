@@ -8,16 +8,16 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="116dp"
         android:background="@drawable/round"
         >
+
         <ImageView
             android:id="@+id/iv_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/round"
-            android:backgroundTint="@color/black"
-            />
+            android:backgroundTint="@color/black" />
         <ToggleButton
             android:id="@+id/favorite_btn"
             android:layout_width="20dp"

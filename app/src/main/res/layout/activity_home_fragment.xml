@@ -61,14 +61,31 @@
         android:layout_width="match_parent"
         android:layout_height="270dp"/>
     <!--  로그인이 되어있지 않으면 보이지 않음  -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Today Hot~!!"
-        android:textSize="20sp"
-        android:paddingVertical="10dp"
-        android:layout_margin="5dp"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            >
+            <TextView
+                android:id="@+id/to_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today Hot"
+                android:textSize="20sp"
+                android:paddingVertical="10dp"
+                android:layout_margin="5dp"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/to_hot"
+                android:backgroundTint="#ff0000"
+                android:background="@drawable/megaphone" />
+
+        </RelativeLayout>
     <!--  로그인이 되어있지 않으면 보이지 않음  -->
 <!--  imagesize 개당 130w,martch_parent  -->
         <TableLayout
