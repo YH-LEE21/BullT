@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,8 @@ import com.example.bullt.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    String userEmail;
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private HomeFragment homeFragment = new HomeFragment();
     private SearchFragment searchFragment = new SearchFragment();
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setOnNavigationItemSelectedListener(new ItemSelectListener());
     }
-
+//추가 사항 로그인정보가 있어야만 하트 기능과 프로필 설정 화면으로 넘어 갈 수 있게 해야함
     private class ItemSelectListener implements BottomNavigationView.OnNavigationItemSelectedListener{
 
         @Override
@@ -47,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_home:
                     transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
                     break;
-
                 case R.id.nav_search:
-                    transaction.replace(R.id.frameLayout, searchFragment).commitAllowingStateLoss();
+                        transaction.replace(R.id.frameLayout, searchFragment).commitAllowingStateLoss();
                     break;
 
                 case R.id.nav_favorite:
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_my:
                     transaction.replace(R.id.frameLayout, myFragment).commitAllowingStateLoss();
                     break;
+
             }
             return true;
         }

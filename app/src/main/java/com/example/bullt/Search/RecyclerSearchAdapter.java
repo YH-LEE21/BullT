@@ -3,6 +3,7 @@ package com.example.bullt.Search;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class RecyclerSearchAdapter extends RecyclerView.Adapter<RecyclerSearchAd
     private Context context;
     private ArrayList<String> list;
 
+    public static final String PREFERENCES_NAME = "rebuild_preference";
+
     public RecyclerSearchAdapter(Context context, ArrayList<String> list){
         this.context = context;
         this.list = list;
@@ -42,10 +45,10 @@ public class RecyclerSearchAdapter extends RecyclerView.Adapter<RecyclerSearchAd
             super(itemView);
             txt = itemView.findViewById(R.id.seartchTxt);
             remove_btn = itemView.findViewById(R.id.rm_searchTxt_btn);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            txt.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-
+                    setString(context,"search_context",txt.getText().toString());
                 }
             });
 
@@ -81,5 +84,21 @@ public class RecyclerSearchAdapter extends RecyclerView.Adapter<RecyclerSearchAd
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public static void setString(Context context, String key, String value) {
+
+        SharedPreferences prefs = getPreferences(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(key, value);
+
+        editor.apply();
+
+    }
+
+    private static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 }

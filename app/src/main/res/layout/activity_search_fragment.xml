@@ -7,10 +7,10 @@
     tools:context=".Fragment.SearchFragment"
     android:orientation="vertical"
     >
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
         <SearchView
             android:id="@+id/SearchView1"
             android:layout_width="match_parent"
@@ -25,65 +25,87 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
-        </FrameLayout>
-        <TableLayout
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_round"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"
-            >
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-                <TableRow>
-                        <Button
-                            android:id="@+id/clothes_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                        <Button
-                            android:id="@+id/pants_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                        <Button
-                            android:id="@+id/shoes_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                </TableRow>
-                <TableRow>
-                        <Button
-                            android:id="@+id/sweater_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                        <Button
-                            android:id="@+id/padding_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                        <Button
-                            android:id="@+id/etc_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-                </TableRow>
-        </TableLayout>
-        <TableLayout
+            <Button
+                android:id="@+id/clothes_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/round"
+                android:text="clothes" />
+
+            <Button
+                android:id="@+id/pants_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="45dp"
+                android:background="@drawable/round"
+                android:text="pants" />
+
+            <Button
+                android:id="@+id/shoes_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/round"
+                android:text="shoes" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             >
-                <TableRow>
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/SearchResult_recycelrView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
-                </TableRow>
-        </TableLayout>
+            <Button
+                android:id="@+id/sweater_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/round"
+                android:text="sweather" />
+
+            <Button
+                android:id="@+id/padding_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="45dp"
+                android:background="@drawable/round"
+                android:text="padding" />
+
+            <Button
+                android:id="@+id/etc_btn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/round"
+                android:text="etc" />
+        </LinearLayout>
+    </LinearLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:background="@drawable/top_round"
+        >
+        <TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/SearchResult_recycelrView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
