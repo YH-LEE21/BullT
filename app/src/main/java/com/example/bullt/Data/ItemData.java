@@ -1,6 +1,6 @@
-package com.example.bullt.ListItems;
+package com.example.bullt.Data;
 
-public class Data {
+public class ItemData {
 
     //상표명,상품종류,가격,이미지,주소
     private String title;
@@ -8,26 +8,25 @@ public class Data {
     private String price;
     private String resId;
     private String path;
+    private String search;
 
 
 
     private String imageId;
-    private boolean like;
     private int count;
 
-    public Data (String title, String content, String price, String resId, String path,String imageID, boolean like, int count){
+    public ItemData(String title, String content, String price, String resId, String path, String imageID, int count,String search){
 
         this.title = title;
         this.content = content;
         this.price = price;
         this.imageId = imageID;
         this.resId = resId;
-
+        this.search = search;
         this.path = path;
-        this.like = like;
         this.count = count;
     }
-    public Data(){}
+    public ItemData(){}
 
     public String getTitle() {
         return title;
@@ -69,14 +68,6 @@ public class Data {
         this.path = path;
     }
 
-    public boolean getLike(){return like;}
-
-    public void setLike(){this.like = like;}
-
-    public boolean isLike() {
-        return like;
-    }
-
     public int getCount() {
         return count;
     }
@@ -90,5 +81,12 @@ public class Data {
 
     public void setImageId(String imageId) {
         this.imageId = imageId;
+    }
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

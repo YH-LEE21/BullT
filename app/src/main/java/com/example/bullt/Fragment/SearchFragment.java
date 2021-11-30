@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -21,9 +19,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bullt.ListItems.Data;
+import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
-import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
 import com.example.bullt.Search.RecyclerSearchAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,7 +60,7 @@ public class SearchFragment extends Fragment {
     public static final String PREFERENCES_NAME = "rebuild_preference";
     //SearPre
     SearchView searchView;
-    ArrayList<Data> list;
+    ArrayList<ItemData> list;
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -163,13 +160,14 @@ public class SearchFragment extends Fragment {
                         String price =String.valueOf(child.get("price"))+"원";
                         String ref = String.valueOf(child.get("ref"));
                         String image_id = String.valueOf(child.get("id"));
+                        String search = String.valueOf(child.get("search"));
                         int count = Integer.parseInt(String.valueOf(child.get("count")));
                         StorageReference storageRef = storage.getReference(child.get("ImagePath"));
 
                         //원하는 아이템찾기....
 
                         if(input.equals(String.valueOf(child.get("search")))){
-                            Data item = new Data(title,content,price,ref,storageRef.getPath(),image_id,false,count);
+                            ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
                             Log.e("ccc",title);
                             Log.e("ccc",content);
                             list.add(item);
@@ -236,6 +234,8 @@ public class SearchFragment extends Fragment {
                                 String price =String.valueOf(child.get("price"))+"원";
                                 String ref = String.valueOf(child.get("ref"));
                                 String image_id = String.valueOf(child.get("id"));
+                                String search = String.valueOf(child.get("search"));
+
                                 int count = Integer.parseInt(String.valueOf(child.get("count")));
                                 StorageReference storageRef = storage.getReference(child.get("ImagePath"));
 //                              원하는 아이템찾기....
@@ -243,7 +243,7 @@ public class SearchFragment extends Fragment {
                                 String[] contents = content.split(" ");
 //                              검색한 입력어 titles와 contents 비교
                                 if(Arrays.asList(titles).contains(query)||Arrays.asList(contents).contains(query)||String.valueOf(child.get("search")).contains(query)){
-                                    Data item = new Data(title,content,price,ref,storageRef.getPath(),image_id,false,count);
+                                    ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
                                     Log.e("ccc",title);
                                     Log.e("ccc",content);
                                     list.add(item);

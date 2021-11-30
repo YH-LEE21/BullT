@@ -19,7 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bullt.Banners.BannerData;
 import com.example.bullt.Banners.BannerPagerAdapter;
-import com.example.bullt.ListItems.Data;
+import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
@@ -47,8 +47,8 @@ public class HomeFragment extends Fragment {
 
     //배너 이미지 정보 담은 리스트
     static ArrayList<BannerData> Bannerlist;
-    static ArrayList<Data> list_item;
-    static ArrayList<Data> list_item2;
+    static ArrayList<ItemData> list_item;
+    static ArrayList<ItemData> list_item2;
     private BannerPagerAdapter pagerAdapter;
 
     //자동 슬라이드 변수
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-        Data d = new Data("회사명","상품명","27000","11","aa","1",true,0);
+        ItemData d = new ItemData("회사명","상품명","27000","11","aa","1",0,"ㄴㄴ");
         list_item.add(d);
         list_item.add(d);
         list_item.add(d);
@@ -186,13 +186,12 @@ public class HomeFragment extends Fragment {
                         String price =String.valueOf(child.get("price"))+"원";
                         String ref = String.valueOf(child.get("ref"));
                         String image_id = String.valueOf(child.get("id"));
+                        String search = String.valueOf(child.get("search"));
                         int count = Integer.parseInt(String.valueOf(child.get("count")));
-
-
 
                         StorageReference storageRef = storage.getReference(child.get("ImagePath"));
                         //제목,내용,가격,사이트주소,이미지주소,부모이름,like,count
-                        Data item = new Data(title,content,price,ref,storageRef.getPath(),image_id,false,count);
+                        ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
                         list_item2.add(item);
                     }
                     adapter.notifyDataSetChanged();
