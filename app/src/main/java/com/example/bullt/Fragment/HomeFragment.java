@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment {
     private RecyclerAdapter2 adapter2;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//  현재 유저 정보
     FirebaseUser user = mAuth.getCurrentUser();
 
     //돋보기 이미지,장바구니 이미지
@@ -80,7 +81,6 @@ public class HomeFragment extends Fragment {
 //      여기 부분에는 firebase 스토리지와 연결 되어 있어야 함
         Setinit();
         FirebaseInit();
-        autoSlide();
         return view;
     }
     //아이디 연결하는 함수
@@ -216,7 +216,6 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -225,5 +224,19 @@ public class HomeFragment extends Fragment {
             }
         },DELAY_MS,PERIOD_MS);
 
+    }
+
+//오류 1개 다른페이지로 넘어가고 다시 돌아가면 그림 1개가 점프해버림...
+    @Override
+    public void onStart() {
+        super.onStart();
+        timer = new Timer();
+        autoSlide();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 }

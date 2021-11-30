@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.bullt.R;
+import com.example.bullt.Recycler.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private Context context;
@@ -67,6 +69,54 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             scaleAnimation.setDuration(2000);
             bounceInterpolator = new BounceInterpolator();
             scaleAnimation.setInterpolator(bounceInterpolator);
+
+            like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    compoundButton.startAnimation(scaleAnimation);
+                    if(isChecked){
+                        //로그인이 되있다면
+                        if(userEmail!=null){
+                            like.setBackgroundResource(R.drawable.checked_heart);
+                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                            int cnt = Integer.parseInt(like.getTag().toString());
+                            cnt++;
+                            HashMap<String,Object> updatedata = new HashMap<>();
+
+                            updatedata.put("count",cnt);
+                            myRef.child("ListItem").child(title.getTag().toString()).updateChildren(updatedata);
+                        }
+                        //로그인이 안되있다면
+                        else{
+                            //로그인 페이지로 넘어감
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            context.startActivity(intent);
+                            Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        //로그인이 되있다면
+                        if(userEmail!=null){
+                            like.setBackgroundResource(R.drawable.unchecked_heart);
+                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+                            int cnt = Integer.parseInt(like.getTag().toString());
+                            cnt--;
+                            HashMap<String,Object> updatedata = new HashMap<>();
+                            updatedata.put("count",cnt);
+                            myRef.child("ListItem").child(title.getTag().toString()).updateChildren(updatedata);
+                        }
+                        //로그인이 안되있다면
+                        else{
+                            //로그인 페이지로 넘어감
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            context.startActivity(intent);
+                            Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
         }
     }
 
@@ -101,6 +151,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String content = item.get(position).getContent();
         String price = item.get(position).getPrice();
         boolean likes = item.get(position).getLike();
+        int count = item.get(position).getCount();
         String imageID = item.get(position).getImageId();
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
@@ -124,46 +175,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         });
 
+        //      imageID저장
+        viewHolder.title.setTag(imageID);
+//      이미지뷰에 아이템 웹 주소저장
         viewHolder.imageView.setTag(item.get(position).getResId());
+//      like에 좋아요 수 저장
+        viewHolder.like.setTag(count);
         //Internet 이동동
         //장바구니 담기 버튼 나오게 하기
         //하트를 눌렀을 때
-        viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                compoundButton.startAnimation(viewHolder.scaleAnimation);
-                if(isChecked){
-                    //로그인이 되있다면
-                    if(userEmail!=null){
-                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                        Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
-                        myRef.child("ListItem").child(imageID).child("count").get().getResult();
-                    }
-                    //로그인이 안되있다면
-                    else{
-                        //로그인 페이지로 넘어감
-//                        Intent intent = new Intent(context.getApplicationContext(), LogInActivity.class);
-//                        context.startActivity(intent);
-                        Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    //로그인이 되있다면
-                    if(userEmail!=null){
-                        viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-                        Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    //로그인이 안되있다면
-                    else{
-                        //로그인 페이지로 넘어감
-//                      Intent intent = new Intent(context.getApplicationContext(), LogInActivity.class);
-//                      context.startActivity(intent);
-                        Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        });
     }
 
     @Override
