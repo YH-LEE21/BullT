@@ -157,34 +157,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
         //      imageID저장
         viewHolder.title.setTag(imageID);
-        try {
-            myRef.child("Favorite").child(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if(task.isSuccessful()){
-                        Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
-                        try{
-                            for (String keys : map.keySet()) {
-                                Map<String, String> child = (Map<String, String>) map.get(keys);
-                                if(child.get("id").equals(imageID)){
-                                    viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                                }
+//        try {
+//            myRef.child("Favorite").child(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                    if(task.isSuccessful()){
+//                        Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
+//                        try{
+//                            for (String keys : map.keySet()) {
+//                                Map<String, String> child = (Map<String, String>) map.get(keys);
+//                                if(child.get("id").equals(imageID)){
+//                                    viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+//                                }
+//
+//                            }
+//                        }catch (Exception e){
+//                            Log.e("for error",e.getMessage());
+//                        }
+//                    }
+//                }
+//            });
+//        }catch (Exception e){
+//            Log.e("ERROR",e.getMessage());
+//        }
 
-                            }
-                        }catch (Exception e){
-                            Log.e("for error",e.getMessage());
-                        }
-                    }
-                }
-            });
-        }catch (Exception e){
-            Log.e("ERROR",e.getMessage());
-        }
+
 //      이미지뷰에 아이템 웹 주소저장
         viewHolder.imageView.setTag(item.get(position).getRef());
 //      like에 좋아요 수 저장
         viewHolder.like.setTag(count);
-        if(dataInstance.getHearts().containsKey(firebaseUser.getUid())){
+        if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
             viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
         }
         else{
@@ -197,60 +199,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 try{
                     String email = firebaseUser.getEmail();
                     onStarClicked(firebaseDatabase.getReference("ListItem").child(imageID));
-                    if(isChecked){
-                         HashMap<String,Object> favorite = new HashMap<>();
-                            favorite.put("title",title);
-                            favorite.put("content",content);
-                            favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                            favorite.put("ref",ref);
-                            favorite.put("id",imageID);
-                            favorite.put("like",true);
-                            favorite.put("imagePath",ImagePath);
-                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                                    }else{
-                                        Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                    }
-                    else{
-                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-                                }else{
-                                    Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
 //                    if(isChecked){
-//                        //로그인이 되있다면
-//                        if(email!=null){
-//                            viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-//                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
-//                            int cnt = item.get(position).getCount();
-//                            item.get(position).setCount(cnt);
-//                            Log.d("cnt",String.valueOf(cnt));
-//                            //cnt++
-//                            HashMap<String,Object> save = new HashMap<>();
-//                            save.put("title",title);
-//                            save.put("content",content);
-//                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-//                            save.put("ref",ref);
-//                            save.put("id",imageID);
-//                            save.put("count",cnt);
-//                            save.put("imagePath",ImagePath);
-//                            save.put("search",search);
-//                            myRef.child("ListItem").child(imageID).setValue(save);
-////                          좋아요한 그림 추가
-//                            HashMap<String,Object> favorite = new HashMap<>();
+//                         HashMap<String,Object> favorite = new HashMap<>();
 //                            favorite.put("title",title);
 //                            favorite.put("content",content);
 //                            favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
@@ -258,28 +208,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //                            favorite.put("id",imageID);
 //                            favorite.put("like",true);
 //                            favorite.put("imagePath",ImagePath);
-//                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite);
-//                        }
+//                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<Void> task) {
+//                                    if(task.isSuccessful()){
+//                                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+//                                    }else{
+//                                        Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
 //                    }
 //                    else{
-//                        //로그인이 되있다면
-//                        if(email!=null){
-//                            viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-//                            int cnt = count;
-//                            item.get(position).setCount(cnt);
-//                            Log.d("cnt",String.valueOf(cnt));
-//                            HashMap<String,Object> save = new HashMap<>();
-//                            save.put("title",title);
-//                            save.put("content",content);
-//                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-//                            save.put("ref",ref);
-//                            save.put("id",imageID);
-//                            save.put("count",cnt);
-//                            save.put("imagePath",ImagePath);
-//                            save.put("search",item.get(position).getSearch());
-//                            myRef.child("ListItem").child(imageID).setValue(save);
-//                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue();
-//                        }
+//                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if(task.isSuccessful()){
+//                                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+//                                }else{
+//                                    Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
 //                    }
                 }catch (Exception e){
 //                  로그인이 안되 있다면
@@ -329,8 +279,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
-    //하트애니메이션
-    private void heartAnim(boolean tf){
-        
-    }
 }
