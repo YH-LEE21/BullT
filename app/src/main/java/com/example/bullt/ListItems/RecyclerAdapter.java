@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,8 +32,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,6 +47,7 @@ import java.util.Map;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private Context context;
     private ArrayList<ItemData> item;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
@@ -111,20 +116,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
-        String title = item.get(position).getTitle();
-        String content = item.get(position).getContent();
-        String price = item.get(position).getPrice();
-        int count = item.get(position).getCount();
-        String imageID = item.get(position).getImageId();
-        String path = item.get(position).getPath();
-        String resid = item.get(position).getResId();
-        String search = item.get(position).getSearch();
+
+        ItemData dataInstance = item.get(viewHolder.getLayoutPosition());
+
+        String title = dataInstance.getTitle();
+        String content = dataInstance.getContent();
+        String price = dataInstance.getPrice()+"원";
+        int count = dataInstance.getCount();
+        String imageID = dataInstance.getId();
+        String ImagePath = dataInstance.getImagePath();
+        String ref = dataInstance.getRef();
+        String search = dataInstance.getSearch();
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
         viewHolder.price.setText(price);
-        StorageReference ref = FirebaseStorage.getInstance().getReference(item.get(position).getPath());
+        StorageReference sref = FirebaseStorage.getInstance().getReference(item.get(position).getImagePath());
         Log.d("레퍼런스", String.valueOf(ref));
-        ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        sref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(!task.isSuccessful()){
@@ -140,7 +148,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 }
             }
         });
-
+        try{
+            firebaseAuth.getCurrentUser().getUid();
+        }
+        catch (Exception e){
+            Intent intent = new Intent(context,LoginActivity.class);
+            context.startActivity(intent);
+        }
         //      imageID저장
         viewHolder.title.setTag(imageID);
         try {
@@ -153,7 +167,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             for (String keys : map.keySet()) {
                                 Map<String, String> child = (Map<String, String>) map.get(keys);
                                 if(child.get("id").equals(imageID)){
-                                    viewHolder.like.setChecked(true);
                                     viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
                                 }
 
@@ -168,75 +181,106 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Log.e("ERROR",e.getMessage());
         }
 //      이미지뷰에 아이템 웹 주소저장
-        viewHolder.imageView.setTag(item.get(position).getResId());
+        viewHolder.imageView.setTag(item.get(position).getRef());
 //      like에 좋아요 수 저장
         viewHolder.like.setTag(count);
+        if(dataInstance.getHearts().containsKey(firebaseUser.getUid())){
+            viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+        }
+        else{
+            viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+        }
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 compoundButton.startAnimation(viewHolder.scaleAnimation);
                 try{
                     String email = firebaseUser.getEmail();
-
+                    onStarClicked(firebaseDatabase.getReference("ListItem").child(imageID));
                     if(isChecked){
-                        //로그인이 되있다면
-                        if(email!=null){
-                            viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
-                            int cnt = item.get(position).getCount();
-                            if(tf) {
-                                cnt++;
-                                tf = false;
-                            }
-                                item.get(position).setCount(cnt);
-                            Log.d("cnt",String.valueOf(cnt));
-                            //cnt++
-                            HashMap<String,Object> save = new HashMap<>();
-                            save.put("title",title);
-                            save.put("content",content);
-                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                            save.put("ref",resid);
-                            save.put("id",imageID);
-                            save.put("count",cnt);
-                            save.put("ImagePath",path);
-                            save.put("search",search);
-                            myRef.child("ListItem").child(imageID).setValue(save);
-//                          좋아요한 그림 추가
-                            HashMap<String,Object> favorite = new HashMap<>();
+                         HashMap<String,Object> favorite = new HashMap<>();
                             favorite.put("title",title);
                             favorite.put("content",content);
                             favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                            favorite.put("ref",resid);
+                            favorite.put("ref",ref);
                             favorite.put("id",imageID);
                             favorite.put("like",true);
-                            favorite.put("ImagePath",path);
-                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite);
-                        }
+                            favorite.put("imagePath",ImagePath);
+                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+                                    }else{
+                                        Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                     }
                     else{
-                        //로그인이 되있다면
-                        if(email!=null){
-                            viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-                            int cnt = item.get(position).getCount();
-                            if(!tf){
-                                cnt--;
-                                tf=true;
+                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+                                }else{
+                                    Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            item.get(position).setCount(cnt);
-                            Log.d("cnt",String.valueOf(cnt));
-                            HashMap<String,Object> save = new HashMap<>();
-                            save.put("title",title);
-                            save.put("content",content);
-                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                            save.put("ref",item.get(position).getResId());
-                            save.put("id",imageID);
-                            save.put("count",cnt);
-                            save.put("ImagePath",item.get(position).getPath());
-                            save.put("search",item.get(position).getSearch());
-                            myRef.child("ListItem").child(imageID).setValue(save);
-                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue();
-                        }
+                        });
                     }
+
+//                    if(isChecked){
+//                        //로그인이 되있다면
+//                        if(email!=null){
+//                            viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+//                            Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+//                            int cnt = item.get(position).getCount();
+//                            item.get(position).setCount(cnt);
+//                            Log.d("cnt",String.valueOf(cnt));
+//                            //cnt++
+//                            HashMap<String,Object> save = new HashMap<>();
+//                            save.put("title",title);
+//                            save.put("content",content);
+//                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+//                            save.put("ref",ref);
+//                            save.put("id",imageID);
+//                            save.put("count",cnt);
+//                            save.put("imagePath",ImagePath);
+//                            save.put("search",search);
+//                            myRef.child("ListItem").child(imageID).setValue(save);
+////                          좋아요한 그림 추가
+//                            HashMap<String,Object> favorite = new HashMap<>();
+//                            favorite.put("title",title);
+//                            favorite.put("content",content);
+//                            favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+//                            favorite.put("ref",ref);
+//                            favorite.put("id",imageID);
+//                            favorite.put("like",true);
+//                            favorite.put("imagePath",ImagePath);
+//                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite);
+//                        }
+//                    }
+//                    else{
+//                        //로그인이 되있다면
+//                        if(email!=null){
+//                            viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+//                            int cnt = count;
+//                            item.get(position).setCount(cnt);
+//                            Log.d("cnt",String.valueOf(cnt));
+//                            HashMap<String,Object> save = new HashMap<>();
+//                            save.put("title",title);
+//                            save.put("content",content);
+//                            save.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+//                            save.put("ref",ref);
+//                            save.put("id",imageID);
+//                            save.put("count",cnt);
+//                            save.put("imagePath",ImagePath);
+//                            save.put("search",item.get(position).getSearch());
+//                            myRef.child("ListItem").child(imageID).setValue(save);
+//                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue();
+//                        }
+//                    }
                 }catch (Exception e){
 //                  로그인이 안되 있다면
                     Intent intent = new Intent(context,LoginActivity.class);
@@ -255,4 +299,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
+    private void onStarClicked(DatabaseReference postRef) {
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ItemData p = mutableData.getValue(ItemData.class);
+                if (p == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                if (p.getHearts().containsKey(firebaseUser.getUid())) {
+                    // Unstar the post and remove self from stars
+                    p.setCount(p.getCount()-1);
+                    p.getHearts().remove(firebaseUser.getUid());
+                } else {
+                    // Star the post and add self to stars
+                    p.setCount(p.getCount() + 1);
+                    p.getHearts().put(firebaseUser.getUid(),true);
+                }
+
+                mutableData.setValue(p);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed,
+                                   DataSnapshot currentData) {
+            }
+        });
+    }
+
+    //하트애니메이션
+    private void heartAnim(boolean tf){
+        
+    }
 }

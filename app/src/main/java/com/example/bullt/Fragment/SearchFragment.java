@@ -138,8 +138,7 @@ public class SearchFragment extends Fragment {
         //파이어베이스 realtime 변수
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        adapter3 = new RecyclerAdapter(getContext(),list);
-        recyclerView3.setAdapter(adapter3);
+
 
         myRef.child("ListItem").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -157,12 +156,12 @@ public class SearchFragment extends Fragment {
                         //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
                         String title = String.valueOf(child.get("title"));
                         String content = String.valueOf(child.get("content"));
-                        String price =String.valueOf(child.get("price"))+"원";
+                        int price =Integer.parseInt(String.valueOf(child.get("price")));
                         String ref = String.valueOf(child.get("ref"));
                         String image_id = String.valueOf(child.get("id"));
                         String search = String.valueOf(child.get("search"));
                         int count = Integer.parseInt(String.valueOf(child.get("count")));
-                        StorageReference storageRef = storage.getReference(child.get("ImagePath"));
+                        StorageReference storageRef = storage.getReference(child.get("imagePath"));
 
                         //원하는 아이템찾기....
 
@@ -177,8 +176,11 @@ public class SearchFragment extends Fragment {
                             Log.e("ccc",content);
                         }
                     }
+
+                    adapter3 = new RecyclerAdapter(getContext(),list);
+                    recyclerView3.setAdapter(adapter3);
+
                     Toast.makeText(getContext(), list.size()+"개 검색결과가 있습니다.", Toast.LENGTH_SHORT).show();
-                    adapter3.notifyDataSetChanged();
                 }
             }
         });
@@ -231,13 +233,13 @@ public class SearchFragment extends Fragment {
                                 //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
                                 String title = String.valueOf(child.get("title"));
                                 String content = String.valueOf(child.get("content"));
-                                String price =String.valueOf(child.get("price"))+"원";
+                                int price =Integer.parseInt(String.valueOf(child.get("price")));
                                 String ref = String.valueOf(child.get("ref"));
                                 String image_id = String.valueOf(child.get("id"));
                                 String search = String.valueOf(child.get("search"));
 
                                 int count = Integer.parseInt(String.valueOf(child.get("count")));
-                                StorageReference storageRef = storage.getReference(child.get("ImagePath"));
+                                StorageReference storageRef = storage.getReference(child.get("imagePath"));
 //                              원하는 아이템찾기....
                                 String[] titles = title.split(" ");
                                 String[] contents = content.split(" ");

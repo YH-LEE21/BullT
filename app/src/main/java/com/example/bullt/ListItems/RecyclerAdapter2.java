@@ -118,15 +118,15 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
     public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
         String title = item.get(position).getTitle();
         String content = item.get(position).getContent();
-        String price = item.get(position).getPrice();
-        String imageID = item.get(position).getImageId();
-        String path = item.get(position).getPath();
-        String resid = item.get(position).getResId();
+        String price = item.get(position).getPrice()+"원";
+        String imageID = item.get(position).getId();
+        String path = item.get(position).getImagePath();
+        String resid = item.get(position).getRef();
         String search = item.get(position).getSearch();
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
         viewHolder.price.setText(price);
-        StorageReference ref = FirebaseStorage.getInstance().getReference(item.get(position).getPath());
+        StorageReference ref = FirebaseStorage.getInstance().getReference(item.get(position).getImagePath());
         Log.d("레퍼런스", String.valueOf(ref));
         ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -154,7 +154,6 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             for (String keys : map.keySet()) {
                                 Map<String, String> child = (Map<String, String>) map.get(keys);
                                 if (child.get("id").equals(imageID)) {
-                                    viewHolder.like.setChecked(true);
                                     viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
                                 }
                             }
@@ -168,7 +167,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
             Log.e("ERROR",e.getMessage());
         }
 //      이미지뷰에 아이템 웹 주소저장
-        viewHolder.imageView.setTag(item.get(position).getResId());
+        viewHolder.imageView.setTag(item.get(position).getRef());
 //      like에 좋아요 수 저장
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -183,7 +182,6 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
                             Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
                             int cnt = item.get(position).getCount();
-                            cnt++;
                             item.get(position).setCount(cnt);
                             Log.d("cnt",String.valueOf(cnt));
     //
@@ -194,7 +192,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             save.put("ref",resid);
                             save.put("id",imageID);
                             save.put("count",cnt);
-                            save.put("ImagePath",path);
+                            save.put("imagePath",path);
                             save.put("search",search);
                             myRef.child("ListItem").child(imageID).setValue(save);
 //                          좋아요한 그림 추가
@@ -205,7 +203,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             favorite.put("ref",resid);
                             favorite.put("id",imageID);
                             favorite.put("like",true);
-                            favorite.put("ImagePath",path);
+                            favorite.put("imagePath",path);
                             myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite);
                         }
                     }
@@ -216,7 +214,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
                             Toast.makeText(context, "찜목록에 추가 되었습니다.", Toast.LENGTH_SHORT).show();
                             int cnt = item.get(position).getCount();
-                            cnt--;
+
                             item.get(position).setCount(cnt);
                             Log.d("cnt",String.valueOf(cnt));
                             HashMap<String,Object> save = new HashMap<>();
@@ -226,7 +224,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                             save.put("ref",resid);
                             save.put("id",imageID);
                             save.put("count",cnt);
-                            save.put("ImagePath",path);
+                            save.put("imagePath",path);
                             save.put("search",search);
                             myRef.child("ListItem").child(imageID).setValue(save);
                             myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue();

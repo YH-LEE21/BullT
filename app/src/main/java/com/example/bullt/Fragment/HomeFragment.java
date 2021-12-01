@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
                         Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
                         for (String keys : map.keySet()) {
                             Map<String, String> child = (Map<String, String>) map.get(keys);
-                            Log.d("image", String.valueOf(child.get("ImagePath")));
+                            Log.d("image", String.valueOf(child.get("imagePath")));
                             Log.d("image", String.valueOf(child.get("ref")));
                             StorageReference storageRef = storage.getReference(child.get("ImagePath"));
     //                            Log.d("DownloadUrl", storageRef.getPath().toString());
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-        ItemData d = new ItemData("회사명","상품명","27000","11","aa","1",0,"ㄴㄴ");
+        ItemData d = new ItemData("회사명","상품명",27000,"11","aa","1",0,"ㄴㄴ");
         list_item.add(d);
         list_item.add(d);
         list_item.add(d);
@@ -183,13 +183,13 @@ public class HomeFragment extends Fragment {
                         //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
                         String title = String.valueOf(child.get("title"));
                         String content = String.valueOf(child.get("content"));
-                        String price =String.valueOf(child.get("price"))+"원";
+                        int price =Integer.parseInt(String.valueOf(child.get("price")));
                         String ref = String.valueOf(child.get("ref"));
                         String image_id = String.valueOf(child.get("id"));
                         String search = String.valueOf(child.get("search"));
                         int count = Integer.parseInt(String.valueOf(child.get("count")));
-
-                        StorageReference storageRef = storage.getReference(child.get("ImagePath"));
+                        Log.e("imagepath",image_id);
+                        StorageReference storageRef = storage.getReference(child.get("imagePath"));
                         //제목,내용,가격,사이트주소,이미지주소,부모이름,like,count
                         ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
                         list_item2.add(item);

@@ -1,29 +1,32 @@
 package com.example.bullt.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ItemData {
 
     //상표명,상품종류,가격,이미지,주소
     private String title;
     private String content;
-    private String price;
-    private String resId;
-    private String path;
+    private int price;
+    private String ref;
+    private String imagePath;
     private String search;
 
+    private Map<String, Boolean> hearts = new HashMap<>();
 
+    private String id;
+    private int count=0;
 
-    private String imageId;
-    private int count;
-
-    public ItemData(String title, String content, String price, String resId, String path, String imageID, int count,String search){
+    public ItemData(String title, String content, int price, String resId, String path, String imageID, int count,String search){
 
         this.title = title;
         this.content = content;
         this.price = price;
-        this.imageId = imageID;
-        this.resId = resId;
+        this.id = imageID;
+        this.ref = resId;
         this.search = search;
-        this.path = path;
+        this.imagePath = path;
         this.count = count;
     }
     public ItemData(){}
@@ -44,28 +47,52 @@ public class ItemData {
         this.content = content;
     }
 
-    public String getPrice(){
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price){
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getResId() {
-        return resId;
+    public String getRef() {
+        return ref;
     }
 
-    public void setResId(String resId) {
-        this.resId = resId;
+    public void setRef(String ref) {
+        this.ref = ref;
     }
 
-    public String getPath(){
-        return path;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setPath(String path){
-        this.path = path;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public Map<String, Boolean> getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(Map<String, Boolean> hearts) {
+        this.hearts = hearts;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getCount() {
@@ -75,18 +102,5 @@ public class ItemData {
     public void setCount(int count) {
         this.count = count;
     }
-    public String getImageId() {
-        return imageId;
-    }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
-    }
 }
