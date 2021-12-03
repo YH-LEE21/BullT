@@ -168,39 +168,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
         //      imageID저장
         viewHolder.title.setTag(imageID);
-//        try {
-//            myRef.child("Favorite").child(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                    if(task.isSuccessful()){
-//                        Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
-//                        try{
-//                            for (String keys : map.keySet()) {
-//                                Map<String, String> child = (Map<String, String>) map.get(keys);
-//                                if(child.get("id").equals(imageID)){
-//                                    viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-//                                }
-//
-//                            }
-//                        }catch (Exception e){
-//                            Log.e("for error",e.getMessage());
-//                        }
-//                    }
-//                }
-//            });
-//        }catch (Exception e){
-//            Log.e("ERROR",e.getMessage());
-//        }
-
-
 //      이미지뷰에 아이템 웹 주소저장
         viewHolder.imageView.setTag(item.get(position).getRef());
-//      like에 좋아요 수 저장
-
 
         // TODO: 2021-12-02
-        viewHolder.like.setTag(count);
-
 //      일단은 실행해서 메인페이지를 띄운다 유저에게 로그인을 강요하지 않기위해서
         try {
             if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
