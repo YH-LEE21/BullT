@@ -183,13 +183,42 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         viewHolder.imageView.setTag(item.get(position).getRef());
 //      like에 좋아요 수 저장
 
-        setItemUpdate(viewHolder);
         viewHolder.like.setTag(count);
         if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
             viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+            HashMap<String,Object> favorite = new HashMap<>();
+            favorite.put("title",title);
+            favorite.put("content",content);
+            favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+            favorite.put("ref",ref);
+            favorite.put("id",imageID);
+            favorite.put("like",true);
+            favorite.put("imagePath",ImagePath);
+            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                    }else{
+                        Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
         else{
             viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+            try {
+                myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                        } else {
+                            Toast.makeText(context, "Favorite", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }catch (Exception e){
+
+            }
         }
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -207,23 +236,11 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
                         favorite.put("id",imageID);
                         favorite.put("like",true);
                         favorite.put("imagePath",ImagePath);
-                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        myRef.child("Laytly").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                                }else{
-                                    Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-                    else{
-                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+                                    Toast.makeText(context,"찜목록에 추가되었습니다.",Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
                                 }
@@ -278,8 +295,5 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         });
     }
 
-    //하트애니메이션
-    private void setItemUpdate(ViewHolder holder){
 
-    }
 }

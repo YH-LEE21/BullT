@@ -54,6 +54,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     String userEmail;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    int i;
     boolean tf = false;
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
@@ -87,7 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    public RecyclerAdapter(Context context, ArrayList<ItemData> list){
+    public RecyclerAdapter(Context context, ArrayList<ItemData> list,int i){
         this.context = context;
         item = list;
         storage = FirebaseStorage.getInstance();
@@ -95,6 +96,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         myRef = database.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        this.i = i;
     }
 
     @Override
@@ -102,13 +104,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.listitem,parent,false);
-
+        View view = null;
+        ViewGroup.LayoutParams layoutParams=null;
         //크기 조절
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = 305;
-        layoutParams.height = 550;
+        if(i == 1){
+            view = inflater.inflate(R.layout.listitem,parent,false);
+
+            //크기 조절
+            layoutParams = view.getLayoutParams();
+            layoutParams.width = 305;
+            layoutParams.height = 550;
+
+        }
+        else if(i == 2){
+            view = inflater.inflate(R.layout.listitem2,parent,false);
+            //크기 조절
+            layoutParams = view.getLayoutParams();
+            layoutParams.width = 500;
+            layoutParams.height = 800;
+            view.setLayoutParams(layoutParams);
+
+        }
         view.setLayoutParams(layoutParams);
+
         RecyclerAdapter.ViewHolder vh = new RecyclerAdapter.ViewHolder(view);
 
         return vh;
@@ -148,13 +166,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 }
             }
         });
-        try{
-            firebaseAuth.getCurrentUser().getUid();
-        }
-        catch (Exception e){
-            Intent intent = new Intent(context,LoginActivity.class);
-            context.startActivity(intent);
-        }
         //      imageID저장
         viewHolder.title.setTag(imageID);
 //        try {
@@ -186,15 +197,48 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         viewHolder.imageView.setTag(item.get(position).getRef());
 //      like에 좋아요 수 저장
 
-        
+
         // TODO: 2021-12-02
         viewHolder.like.setTag(count);
-        if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
-            viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-        }
-        else{
-            viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-        }
+
+//      일단은 실행해서 메인페이지를 띄운다 유저에게 로그인을 강요하지 않기위해서
+        try {
+            if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
+                viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
+                HashMap<String,Object> favorite = new HashMap<>();
+                favorite.put("title",title);
+                favorite.put("content",content);
+                favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+                favorite.put("ref",ref);
+                favorite.put("id",imageID);
+                favorite.put("like",true);
+                favorite.put("imagePath",ImagePath);
+                myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                        }else{
+                            Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+            else{
+                viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+                try{
+                    myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                            }else{
+                                Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }catch (Exception e){}
+            }
+        }catch (Exception e){}
+
         viewHolder.like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -202,6 +246,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 try{
                     String email = firebaseUser.getEmail();
                     onStarClicked(firebaseDatabase.getReference("ListItem").child(imageID));
+//                  최근본 내용 저장 기능
                     if(isChecked){
                          HashMap<String,Object> favorite = new HashMap<>();
                             favorite.put("title",title);
@@ -211,28 +256,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             favorite.put("id",imageID);
                             favorite.put("like",true);
                             favorite.put("imagePath",ImagePath);
-                            myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
                                     }else{
-                                        Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context,"Lately",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-                    }
-                    else{
-                        myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-                                }else{
-                                    Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
                     }
                 }catch (Exception e){
 //                  로그인이 안되 있다면

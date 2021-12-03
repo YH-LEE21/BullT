@@ -21,13 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
+import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
 import com.example.bullt.Search.RecyclerSearchAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -61,6 +64,8 @@ public class SearchFragment extends Fragment {
     //SearPre
     SearchView searchView;
     ArrayList<ItemData> list;
+
+    FirebaseDatabase database;
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -136,54 +141,10 @@ public class SearchFragment extends Fragment {
     private void FireBaseDataInit(String input){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         //파이어베이스 realtime 변수
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-
-
-        myRef.child("ListItem").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(!task.isSuccessful()){
-                    Log.e("aaa","실패");
-                }else{
-                    //이전 검색 초기화
-                    list.clear();
-//                          데이터 가져오기
-                    Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
-                    for (String keys : map.keySet()) {
-                        Map<String, String> child = (Map<String, String>) map.get(keys);
-
-                        //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
-                        String title = String.valueOf(child.get("title"));
-                        String content = String.valueOf(child.get("content"));
-                        int price =Integer.parseInt(String.valueOf(child.get("price")));
-                        String ref = String.valueOf(child.get("ref"));
-                        String image_id = String.valueOf(child.get("id"));
-                        String search = String.valueOf(child.get("search"));
-                        int count = Integer.parseInt(String.valueOf(child.get("count")));
-                        StorageReference storageRef = storage.getReference(child.get("imagePath"));
-
-                        //원하는 아이템찾기....
-
-                        if(input.equals(String.valueOf(child.get("search")))){
-                            ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
-                            Log.e("ccc",title);
-                            Log.e("ccc",content);
-                            list.add(item);
-                        }
-                        else{
-                            Log.e("ccc",input.contains(title)+"");
-                            Log.e("ccc",content);
-                        }
-                    }
-
-                    adapter3 = new RecyclerAdapter(getContext(),list);
-                    recyclerView3.setAdapter(adapter3);
-
-                    Toast.makeText(getContext(), list.size()+"개 검색결과가 있습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//      데이터 가져오기
+        getData(input);
     }
     private void FireBaseDataInit(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -211,73 +172,30 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                adapter3 = new RecyclerAdapter(getContext(),list);
+                adapter3 = new RecyclerAdapter(getContext(),list,1);
                 recyclerView3.setAdapter(adapter3);
 
                 RsAdapter = new RecyclerSearchAdapter(getContext(),s_list);
                 SearchRecyclerView.setAdapter(RsAdapter);
-
-                myRef.child("ListItem").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if(!task.isSuccessful()){
-                            Log.e("aaa","실패");
-                        }else{
-                            //이전 검색 초기화
-                            list.clear();
-//                          데이터 가져오기
-                            Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
-                            for (String keys : map.keySet()) {
-                                Map<String, String> child = (Map<String, String>) map.get(keys);
-
-                                //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
-                                String title = String.valueOf(child.get("title"));
-                                String content = String.valueOf(child.get("content"));
-                                int price =Integer.parseInt(String.valueOf(child.get("price")));
-                                String ref = String.valueOf(child.get("ref"));
-                                String image_id = String.valueOf(child.get("id"));
-                                String search = String.valueOf(child.get("search"));
-
-                                int count = Integer.parseInt(String.valueOf(child.get("count")));
-                                StorageReference storageRef = storage.getReference(child.get("imagePath"));
-//                              원하는 아이템찾기....
-                                String[] titles = title.split(" ");
-                                String[] contents = content.split(" ");
-//                              검색한 입력어 titles와 contents 비교
-                                if(Arrays.asList(titles).contains(query)||Arrays.asList(contents).contains(query)||String.valueOf(child.get("search")).contains(query)){
-                                    ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
-                                    Log.e("ccc",title);
-                                    Log.e("ccc",content);
-                                    list.add(item);
-                                }
-                                else{
-                                    Log.e("ccc",query.contains(title)+"");
-                                    Log.e("ccc",content);
-                                }
-
-
-                            }
-                            //중복 검색 거르기
-                            if(s_list.size()==0){
-                                s_list.add(query);
-                            }
-                            else {
-                                boolean tf = false;
-                                for (int i = 0; i < s_list.size(); i++) {
-                                    //검색기록이 있으면
-                                    if (s_list.get(i).equals(query)) {
-                                        tf = true;
-                                        break;
-                                    }
-                                }
-                                if(!tf) s_list.add(query);
-                            }
-                            Toast.makeText(getContext(), list.size()+"개 검색결과가 있습니다.", Toast.LENGTH_SHORT).show();
-                            adapter3.notifyDataSetChanged();
-                            RsAdapter.notifyDataSetChanged();
+                getData(query);
+                if(s_list.size()==0){
+                    s_list.add(query);
+                }
+                else {
+                    boolean tf = false;
+                    for (int i = 0; i < s_list.size(); i++) {
+                        //검색기록이 있으면
+                        if (s_list.get(i).equals(query)) {
+                            tf = true;
+                            break;
                         }
                     }
-                });
+                    if(!tf) s_list.add(query);
+                }
+                Toast.makeText(getContext(), list.size()+"개 검색결과가 있습니다.", Toast.LENGTH_SHORT).show();
+                adapter3.notifyDataSetChanged();
+                RsAdapter.notifyDataSetChanged();
+
                 //입력완료하면 포커스 해제,아이템 목록 안보임
                 searchView.clearFocus();
                 SearchRecyclerView.setVisibility(View.GONE);
@@ -336,5 +254,30 @@ public class SearchFragment extends Fragment {
         super.onPause();
         setStringArrayPref(getContext(), SETTINGS_PLAYER_JSON, s_list);
     }
+    private void getData(String query){
+        adapter3 = new RecyclerAdapter(getContext(),list,1);
+        recyclerView3.setAdapter(adapter3);
+        database.getReference().child("ListItem").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
 
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    ItemData itemData = ds.getValue(ItemData.class);
+                    String[] titles = itemData.getTitle().split(" ");
+                    String[] contents = itemData.getContent().split(" ");
+//                              검색한 입력어 titles와 contents 비교
+                    if(Arrays.asList(titles).contains(query)||Arrays.asList(contents).contains(query)||itemData.getSearch().contains(query)){
+                        list.add(itemData);
+                    }
+                }
+                adapter3.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { //에러가 날때 작동
+
+            }
+        });
+    }
 }

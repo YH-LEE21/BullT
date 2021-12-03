@@ -29,19 +29,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
     private View view;
-
+    private FirebaseDatabase database;
     //배너 이미지를 보여주는 변수
     ViewPager2 v_pager;
 
@@ -63,7 +66,7 @@ public class HomeFragment extends Fragment {
     private RecyclerAdapter adapter;
     //ListItem_view
     RecyclerView recyclerView2;
-    private RecyclerAdapter2 adapter2;
+    private RecyclerAdapter adapter2;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 //  현재 유저 정보
@@ -79,12 +82,13 @@ public class HomeFragment extends Fragment {
         list_item = new ArrayList<>();
         list_item2 = new ArrayList<>();
 //      여기 부분에는 firebase 스토리지와 연결 되어 있어야 함
-        Setinit();
+        Setinit(view);
         FirebaseInit();
+        getData();
         return view;
     }
     //아이디 연결하는 함수
-    public void Setinit(){
+    public void Setinit(View view){
         //배너 이미지
         v_pager = view.findViewById(R.id.image_slide);
         //돋보기 버튼
@@ -119,7 +123,7 @@ public class HomeFragment extends Fragment {
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         //파이어베이스 realtime 변수
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         pagerAdapter = new BannerPagerAdapter(getContext(),Bannerlist);
         v_pager.setAdapter(pagerAdapter);
@@ -153,52 +157,9 @@ public class HomeFragment extends Fragment {
         list_item.add(d);
 
 //                        Data Listitem = new Data();
-        adapter = new RecyclerAdapter(getContext(),list_item);
+        adapter = new RecyclerAdapter(getContext(),list_item,1);
         recyclerView1.setAdapter(adapter);
 
-        //로그인을 만들면 구현
-//        myRef.child("users").child(mAuth.getCurrentUser().getUid())
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//
-//                    }
-//                });
-
-        adapter2 = new RecyclerAdapter2(getContext(),list_item2);
-        recyclerView2.setAdapter(adapter2);
-
-
-        myRef.child("ListItem").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(!task.isSuccessful()){
-                    Log.e("aaa","실패");
-                }else{
-                    Map<String, Object> map = (Map<String, Object>) task.getResult().getValue();
-                    for (String keys : map.keySet()) {
-                        Map<String, String> child = (Map<String, String>) map.get(keys);
-
-                        //상표명,내용,가격,주소,이미지 주소,데이터베이스 이미지 이름,count
-                        String title = String.valueOf(child.get("title"));
-                        String content = String.valueOf(child.get("content"));
-                        int price =Integer.parseInt(String.valueOf(child.get("price")));
-                        String ref = String.valueOf(child.get("ref"));
-                        String image_id = String.valueOf(child.get("id"));
-                        String search = String.valueOf(child.get("search"));
-                        int count = Integer.parseInt(String.valueOf(child.get("count")));
-                        Log.e("imagepath",image_id);
-                        StorageReference storageRef = storage.getReference(child.get("imagePath"));
-                        //제목,내용,가격,사이트주소,이미지주소,부모이름,like,count
-                        ItemData item = new ItemData(title,content,price,ref,storageRef.getPath(),image_id,count,search);
-                        list_item2.add(item);
-                    }
-                    adapter.notifyDataSetChanged();
-                    adapter2.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     // 이미지 슬라이더 구현 메서드
@@ -237,5 +198,27 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         timer.cancel();
+    }
+
+    private void getData(){
+        adapter2 = new RecyclerAdapter(getContext(),list_item2,2);
+        recyclerView2.setAdapter(adapter2);
+        database.getReference().child("ListItem").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list_item2.clear();
+
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    ItemData itemData = ds.getValue(ItemData.class);
+                    list_item2.add(itemData);
+                }
+                adapter2.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { //에러가 날때 작동
+            
+            }
+        });
     }
 }
