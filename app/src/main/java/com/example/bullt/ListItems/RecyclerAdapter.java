@@ -127,6 +127,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             view.setLayoutParams(layoutParams);
 
         }
+        else if(i == 3){
+            view = inflater.inflate(R.layout.listitem3,parent,false);
+            layoutParams = view.getLayoutParams();
+            view.setLayoutParams(layoutParams);
+        }
         view.setLayoutParams(layoutParams);
 
         RecyclerAdapter.ViewHolder vh = new RecyclerAdapter.ViewHolder(view);
@@ -210,38 +215,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         try {
             if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
                 viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-                HashMap<String,Object> favorite = new HashMap<>();
-                favorite.put("title",title);
-                favorite.put("content",content);
-                favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                favorite.put("ref",ref);
-                favorite.put("id",imageID);
-                favorite.put("like",true);
-                favorite.put("imagePath",ImagePath);
-                myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                        }else{
-                            Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
             }
             else{
                 viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
-//              Favorite가 없는 imageID가 있을수 있기 때문에 예외처리를 해준다.
-                try{
-                    myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                            }else{
-                                Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }catch (Exception e){}
             }
         }catch (Exception e){}
 
@@ -301,10 +278,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     // Unstar the post and remove self from stars
                     p.setCount(p.getCount()-1);
                     p.getHearts().remove(firebaseUser.getUid());
+
+                    myRef.child("Favorite").child(firebaseUser.getUid()).child(p.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(context,"찜목록에 제외 되었습니다.",Toast.LENGTH_SHORT).show();
+                            }else{
+                            }
+                        }
+                    });
                 } else {
                     // Star the post and add self to stars
                     p.setCount(p.getCount() + 1);
                     p.getHearts().put(firebaseUser.getUid(),true);
+                    myRef.child("Favorite").child(firebaseUser.getUid()).child(p.getId()).setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(context,"찜목록에 추가 되었습니다.",Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
                 mutableData.setValue(p);

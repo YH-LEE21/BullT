@@ -1,5 +1,6 @@
 package com.example.bullt.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment {
 
     //예시
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.activity_home_fragment, container, false);
         Bannerlist = new ArrayList<>();
         list_item = new ArrayList<>();
@@ -105,6 +107,12 @@ public class HomeFragment extends Fragment {
         });
         //장바구니 버튼
         cart_iv = view.findViewById(R.id.cart_iv);
+        cart_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         //HotItem
         recyclerView1 = (RecyclerView) view.findViewById(R.id.recyclerView1);
@@ -234,4 +242,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 }

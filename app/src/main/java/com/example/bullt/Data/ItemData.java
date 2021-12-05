@@ -12,6 +12,9 @@ public class ItemData implements Comparable<ItemData>{
     private String ref;
     private String imagePath;
     private String search;
+    private Boolean like;
+
+
 
     private Map<String, Boolean> hearts = new HashMap<>();
 
@@ -102,7 +105,13 @@ public class ItemData implements Comparable<ItemData>{
     public void setCount(int count) {
         this.count = count;
     }
+    public Boolean getLike() {
+        return like;
+    }
 
+    public void setLike(Boolean like) {
+        this.like = like;
+    }
     @Override
     public int compareTo(ItemData o) {
         if (o.count < count) {

@@ -282,4 +282,9 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
