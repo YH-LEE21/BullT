@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.viewpager2.widget.ViewPager2;
 
 
@@ -21,7 +22,6 @@ import com.example.bullt.Banners.BannerData;
 import com.example.bullt.Banners.BannerPagerAdapter;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
-import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
 import com.example.bullt.Recycler.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +37,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -103,12 +106,11 @@ public class HomeFragment extends Fragment {
         //장바구니 버튼
         cart_iv = view.findViewById(R.id.cart_iv);
 
-
-
-
+        //HotItem
         recyclerView1 = (RecyclerView) view.findViewById(R.id.recyclerView1);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
+        //list_item
         recyclerView2 =(RecyclerView)view.findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(getContext(),2));
 
@@ -150,15 +152,14 @@ public class HomeFragment extends Fragment {
                         pagerAdapter.notifyDataSetChanged();
                     }
                 }
-            });
-        ItemData d = new ItemData("회사명","상품명",27000,"11","aa","1",0,"ㄴㄴ");
-        list_item.add(d);
-        list_item.add(d);
-        list_item.add(d);
 
+            });
 //                        Data Listitem = new Data();
         adapter = new RecyclerAdapter(getContext(),list_item,1);
         recyclerView1.setAdapter(adapter);
+
+        adapter2 = new RecyclerAdapter(getContext(),list_item2,2);
+        recyclerView2.setAdapter(adapter2);
 
     }
 
@@ -200,18 +201,30 @@ public class HomeFragment extends Fragment {
         timer.cancel();
     }
 
+//  리스트아이템 업데이트
     private void getData(){
-        adapter2 = new RecyclerAdapter(getContext(),list_item2,2);
-        recyclerView2.setAdapter(adapter2);
+
         database.getReference().child("ListItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list_item2.clear();
-
+                list_item.clear();
                 for(DataSnapshot ds: snapshot.getChildren()){
                     ItemData itemData = ds.getValue(ItemData.class);
+                    list_item.add(itemData);
                     list_item2.add(itemData);
                 }
+                //내림차순정렬
+                Collections.sort(list_item,Collections.reverseOrder());
+                ArrayList<ItemData> list_hot = new ArrayList<>();
+                for(int i =0;i<3;i++){
+                    list_hot.add(list_item.get(i));
+                }
+                list_item.clear();
+                for(ItemData d : list_hot){
+                    list_item.add(d);
+                }
+                adapter.notifyDataSetChanged();
                 adapter2.notifyDataSetChanged();
             }
 

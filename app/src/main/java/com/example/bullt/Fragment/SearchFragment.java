@@ -1,5 +1,7 @@
 package com.example.bullt.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,11 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
-import com.example.bullt.ListItems.RecyclerAdapter2;
 import com.example.bullt.R;
 import com.example.bullt.Search.RecyclerSearchAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +46,8 @@ import java.util.Map;
 
 public class SearchFragment extends Fragment {
     private View view;
-    String userEmail;
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     //검색기록 리사이클뷰
     RecyclerView SearchRecyclerView;
     private RecyclerSearchAdapter RsAdapter;
@@ -55,7 +59,8 @@ public class SearchFragment extends Fragment {
     //옷,바지,신발,스웨터,패딩,액세서리
     Button clothes_btn,pants_btn,shoes_btn,sweater_btn,padding_btn,etc_btn;
     // ArrayList -> Json으로 변환
-    private static final String SETTINGS_PLAYER_JSON = "settings_item_json";
+
+    private static String SETTINGS_PLAYER_JSON;
 
     //아이템 리사이클뷰
     RecyclerView recyclerView3;
@@ -66,6 +71,8 @@ public class SearchFragment extends Fragment {
     ArrayList<ItemData> list;
 
     FirebaseDatabase database;
+    DatabaseReference myRef;
+
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -76,15 +83,18 @@ public class SearchFragment extends Fragment {
         SearchRecyclerView = view.findViewById(R.id.search_recyclerView);
         SearchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         s_list = new ArrayList<>();
+        try {
+            String userUid = firebaseAuth.getCurrentUser().getUid();
+            SETTINGS_PLAYER_JSON = userUid;
+        }catch(Exception e){SETTINGS_PLAYER_JSON = "123";}
         s_list = getStringArrayPref(getContext(),SETTINGS_PLAYER_JSON);
         //검색한 자료
 //       1.검색결과 리사이클뷰 연결,3.recyclerview 레이아웃 GridLayout 설정,4.ArrayList로 이미지 정보 저장
         recyclerView3 = view.findViewById(R.id.SearchResult_recycelrView);
         recyclerView3.setLayoutManager(new GridLayoutManager(getContext(),3));
         list = new ArrayList<>();
-        FireBaseDataInit();
         Setinit();
-
+        setSearchView();
         return view;
     }
 
@@ -136,24 +146,20 @@ public class SearchFragment extends Fragment {
                 FireBaseDataInit("그외");
             }
         });
+
+        // TODO: 2021-12-04 SharedPreferences를 사용하여 검색기록중에 하나를 누르면 그내용을 searchView.setQuery해주기
     }
+
 
     private void FireBaseDataInit(String input){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         //파이어베이스 realtime 변수
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
+        myRef = database.getReference();
 //      데이터 가져오기
         getData(input);
     }
-    private void FireBaseDataInit(){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-
-        //파이어베이스 realtime 변수
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-
+    private void setSearchView(){
 //      searchview 텍스트 포커스 할때
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -172,11 +178,6 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                adapter3 = new RecyclerAdapter(getContext(),list,1);
-                recyclerView3.setAdapter(adapter3);
-
-                RsAdapter = new RecyclerSearchAdapter(getContext(),s_list);
-                SearchRecyclerView.setAdapter(RsAdapter);
                 getData(query);
                 if(s_list.size()==0){
                     s_list.add(query);
@@ -257,7 +258,8 @@ public class SearchFragment extends Fragment {
     private void getData(String query){
         adapter3 = new RecyclerAdapter(getContext(),list,1);
         recyclerView3.setAdapter(adapter3);
-        database.getReference().child("ListItem").addValueEventListener(new ValueEventListener() {
+        myRef = database.getReference();
+        myRef.child("ListItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

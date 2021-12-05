@@ -3,7 +3,7 @@ package com.example.bullt.Data;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemData {
+public class ItemData implements Comparable<ItemData>{
 
     //상표명,상품종류,가격,이미지,주소
     private String title;
@@ -101,6 +101,16 @@ public class ItemData {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public int compareTo(ItemData o) {
+        if (o.count < count) {
+            return 1;
+        } else if (o.price > count) {
+            return -1;
+        }
+        return 0;
     }
 
 }

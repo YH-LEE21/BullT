@@ -1,7 +1,9 @@
 package com.example.bullt.ListItems;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -46,16 +48,18 @@ import java.util.Map;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private Context context;
+    //아이템 정보를 담은 리스트
     private ArrayList<ItemData> item;
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+    //파이어베이스데이터베이스, 파이어베이스 유저,auth,스토리지,실시간데이터베이스
+    FirebaseDatabase database;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
-    String userEmail;
-    FirebaseDatabase database;
     DatabaseReference myRef;
+
+    //레이아웃크기를 상황에 맞게 바꿔주기위한 변수
     int i;
-    boolean tf = false;
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         ToggleButton like;
@@ -73,8 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(imageView.getTag().toString()));
-                    context.startActivity(intent);
+
                 }
             });
 
@@ -109,7 +112,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //크기 조절
         if(i == 1){
             view = inflater.inflate(R.layout.listitem,parent,false);
-
             //크기 조절
             layoutParams = view.getLayoutParams();
             layoutParams.width = 305;
@@ -171,7 +173,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //      이미지뷰에 아이템 웹 주소저장
         viewHolder.imageView.setTag(item.get(position).getRef());
 
-        // TODO: 2021-12-02
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//              최근에 본 아이템
+                HashMap<String,Object> favorite = new HashMap<>();
+                favorite.put("title",title);
+                favorite.put("content",content);
+                favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+                favorite.put("ref",ref);
+                favorite.put("id",imageID);
+                favorite.put("like",true);
+                favorite.put("imagePath",ImagePath);
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(ref));
+                context.startActivity(intent);
+                try{//firebaseUser.getUid가 없을수 있기때문에 예외처리를 해준다.
+                    myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(context,"찜목록에 추가되었습니다.",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context,"Lately",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }catch (Exception e){}
+            }
+        });
+
+
+
+
 //      일단은 실행해서 메인페이지를 띄운다 유저에게 로그인을 강요하지 않기위해서
         try {
             if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
@@ -196,6 +230,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
             else{
                 viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
+//              Favorite가 없는 imageID가 있을수 있기 때문에 예외처리를 해준다.
                 try{
                     myRef.child("Favorite").child(firebaseUser.getUid()).child(imageID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -214,38 +249,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 compoundButton.startAnimation(viewHolder.scaleAnimation);
-                try{
+
+                try{//유저의 email이 없으면 catch문으로 가서 예외처리를 한다.
                     String email = firebaseUser.getEmail();
-                    onStarClicked(firebaseDatabase.getReference("ListItem").child(imageID));
-//                  최근본 내용 저장 기능
-                    if(isChecked){
-                         HashMap<String,Object> favorite = new HashMap<>();
-                            favorite.put("title",title);
-                            favorite.put("content",content);
-                            favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                            favorite.put("ref",ref);
-                            favorite.put("id",imageID);
-                            favorite.put("like",true);
-                            favorite.put("imagePath",ImagePath);
-                            myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                    }else{
-                                        Toast.makeText(context,"Lately",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                    }
+                    onStarClicked(database.getReference("ListItem").child(imageID));
+
                 }catch (Exception e){
-//                  로그인이 안되 있다면
-                    Intent intent = new Intent(context,LoginActivity.class);
-                    context.startActivity(intent);
-                    Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+//                  로그인이 안되 있다면 AlertDialog를 사용해 로그인 할지 안할지 결정한다
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                    dlg.setTitle("BullT");
+                    dlg.setMessage("로그인이 필요한 서비스 입니다.\n로그인 하시겠습니까??");
+                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(context,LoginActivity.class);
+                            context.startActivity(intent);
+                            Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dlg.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dlg.show();
                 }
 
             }
         });
+
 
     }
 
@@ -284,5 +317,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         });
     }
-
 }

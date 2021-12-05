@@ -95,7 +95,6 @@ public class RecyclerSearchAdapter extends RecyclerView.Adapter<RecyclerSearchAd
         editor.putString(key, value);
 
         editor.apply();
-
     }
 
     private static SharedPreferences getPreferences(Context context) {
