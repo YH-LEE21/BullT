@@ -31,6 +31,7 @@ import java.util.Collections;
 
 public class FavoriteFragment extends Fragment{
     private View view;
+//  작은바둑판,큰바둑판,수평정렬
     private ImageButton GridView3_ib,GridView2_ib,LinearV_ib;
     private RecyclerView favoriteRecyclerView;
     private ArrayList<ItemData> list_item;

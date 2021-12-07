@@ -13,11 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
+            android:name=".Recycler.ClickShowActivity"
+            android:exported="false" />
+        <activity
             android:name=".Recycler.CartActivity"
             android:exported="false" />
-        <activity android:name=".Recycler.LoginActivity"/>
+        <activity android:name=".Recycler.LoginActivity" />
         <activity android:name=".Recycler.MainActivity" />
-        <activity android:name=".Recycler.RegisterActivity"/>
+        <activity android:name=".Recycler.RegisterActivity" />
         <activity
             android:name=".Fragment.FavoriteFragment"
             tools:ignore="Instantiatable" />

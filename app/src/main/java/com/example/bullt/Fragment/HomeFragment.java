@@ -24,6 +24,7 @@ import com.example.bullt.Banners.BannerPagerAdapter;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.R;
+import com.example.bullt.Recycler.CartActivity;
 import com.example.bullt.Recycler.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment {
         Setinit(view);
         FirebaseInit();
         getData();
+
         return view;
     }
     //아이디 연결하는 함수
@@ -110,7 +112,8 @@ public class HomeFragment extends Fragment {
         cart_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), CartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -223,6 +226,8 @@ public class HomeFragment extends Fragment {
                     list_item2.add(itemData);
                 }
                 //내림차순정렬
+                //hotitem
+
                 Collections.sort(list_item,Collections.reverseOrder());
                 ArrayList<ItemData> list_hot = new ArrayList<>();
                 for(int i =0;i<3;i++){

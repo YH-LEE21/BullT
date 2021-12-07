@@ -28,6 +28,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.R;
+import com.example.bullt.Recycler.ClickShowActivity;
 import com.example.bullt.Recycler.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -124,13 +125,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             layoutParams = view.getLayoutParams();
             layoutParams.width = 500;
             layoutParams.height = 800;
-            view.setLayoutParams(layoutParams);
 
         }
         else if(i == 3){
             view = inflater.inflate(R.layout.listitem3,parent,false);
             layoutParams = view.getLayoutParams();
-            view.setLayoutParams(layoutParams);
         }
         view.setLayoutParams(layoutParams);
 
@@ -191,8 +190,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 favorite.put("id",imageID);
                 favorite.put("like",true);
                 favorite.put("imagePath",ImagePath);
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(ref));
+                Intent intent = new Intent(context, ClickShowActivity.class);
+                intent.putExtra("title",dataInstance.getTitle());
+                intent.putExtra("content",dataInstance.getContent());
+                intent.putExtra("price",dataInstance.getPrice());
+                intent.putExtra("id",dataInstance.getId());
+                intent.putExtra("ref",dataInstance.getRef());
+                intent.putExtra("imagePath",dataInstance.getImagePath());
                 context.startActivity(intent);
+
+                //Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(ref));
+                //context.startActivity(intent);
                 try{//firebaseUser.getUid가 없을수 있기때문에 예외처리를 해준다.
                     myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

@@ -14,8 +14,7 @@
         <ImageView
             android:id="@+id/iv_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
         <ToggleButton
             android:id="@+id/favorite_btn"
             android:layout_width="25dp"
@@ -27,6 +26,8 @@
             android:textOn=" "
             android:checked="false"
             android:background="@drawable/unchecked_heart"
+
+
             />
     </RelativeLayout>
     <TextView

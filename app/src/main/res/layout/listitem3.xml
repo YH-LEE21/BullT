@@ -18,14 +18,15 @@
     <RelativeLayout
         android:layout_width="100dp"
         android:layout_height="100dp">
-    <ImageView
-        android:id="@+id/iv_main"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/iv_main"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
 
     <ToggleButton
         android:id="@+id/favorite_btn"
@@ -36,10 +37,12 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/unchecked_heart"
+
         android:checked="false"
         android:textOff=" "
         android:textOn=" "
          />
+
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
