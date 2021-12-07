@@ -43,7 +43,9 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
     DatabaseReference myRef;
-
+    DecimalFormat formatter = new DecimalFormat("###,###");
     //레이아웃크기를 상황에 맞게 바꿔주기위한 변수
     int i;
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -74,13 +76,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             content = itemView.findViewById(R.id.tv_content);
             price = itemView.findViewById(R.id.tv_price);
             like = itemView.findViewById(R.id.favorite_btn);
-
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
             //하트를 누를때 애니메이션
             BounceInterpolator bounceInterpolator;//애니메이션이 일어나는 동안의 회수, 속도를 조절하거나 시작과 종료시의 효과를 추가 할 수 있다
@@ -146,6 +141,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String title = dataInstance.getTitle();
         String content = dataInstance.getContent();
         String price = dataInstance.getPrice()+"원";
+        String price1 = formatter.format(dataInstance.getPrice())+"원";
         int count = dataInstance.getCount();
         String imageID = dataInstance.getId();
         String ImagePath = dataInstance.getImagePath();
@@ -153,7 +149,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String search = dataInstance.getSearch();
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
-        viewHolder.price.setText(price);
+        viewHolder.price.setText(price1);
         StorageReference sref = FirebaseStorage.getInstance().getReference(item.get(position).getImagePath());
         Log.d("레퍼런스", String.valueOf(ref));
         sref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -206,7 +202,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(context,"찜목록에 추가되었습니다.",Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context,"Lately",Toast.LENGTH_SHORT).show();
                             }

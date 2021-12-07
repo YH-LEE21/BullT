@@ -184,14 +184,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             >
 
             <ImageButton
                 android:id="@+id/CountDown_ib"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_toLeftOf="@id/count_et"
+                android:layout_marginLeft="60dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
 
@@ -201,20 +200,31 @@
                 android:id="@+id/count_et"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_toLeftOf="@id/CountUp_ib"
+                android:layout_toRightOf="@id/CountDown_ib"
                 android:background="@drawable/memo_border"
-                android:text="1"
                 android:enabled="false"
                 android:inputType="number"
+                android:text="1"
                 android:textAlignment="center" />
 
             <ImageButton
                 android:id="@+id/CountUp_ib"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/count_et"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="price"
+                android:textAlignment="center"
+                android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
 
