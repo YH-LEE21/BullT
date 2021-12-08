@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +39,16 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
     //아이템 정보를 담은 리스트
     private ArrayList<CartData> item;
     //파이어베이스데이터베이스, 파이어베이스 유저,auth,스토리지,실시간데이터베이스
+
+    private OnItemClick mCallback;
+
+
     FirebaseDatabase database;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
     DatabaseReference myRef;
-
+    int cartActivity_totalPrice;
     DecimalFormat formatter = new DecimalFormat("###,###");
     public class ViewHoler extends RecyclerView.ViewHolder {
 //      버튼 선언
@@ -64,12 +70,15 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         }
     }
 
-    public CartRecyclerAdapter(Context context,ArrayList<CartData> item){
+    public CartRecyclerAdapter(Context context,ArrayList<CartData> item,OnItemClick listener){
         this.context = context;
         this.item = item;
+        mCallback = listener;
+
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
+        cartActivity_totalPrice = 0;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
     }
@@ -92,8 +101,8 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         String title = dataInstance.getTitle();
         String content = dataInstance.getContent();
         String imagePath = dataInstance.getImagePath();
-        String sizeCount =dataInstance.getSize()+"  "+dataInstance.getCount();
-        String total = formatter.format(dataInstance.getTotalprice())+"원";
+        String sizeCount ="Size : "+dataInstance.getSize()+",  수량 : "+dataInstance.getCount();
+        String total = formatter.format(dataInstance.getTotalprice())+" 원";
 
         Log.e("imagePath",imagePath.toString());
         StorageReference sref = FirebaseStorage.getInstance().getReference(dataInstance.getImagePath());
@@ -117,10 +126,50 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         holder.tv_content.setText(content);
         holder.tv_sizeCount.setText(sizeCount);
         holder.tv_price1.setText(total);
+        holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    //값을 전달해야함
+                    cartActivity_totalPrice+=dataInstance.getTotalprice();
+                    mCallback.onClick(cartActivity_totalPrice);
+                    Log.e("cartActivity",String.valueOf(cartActivity_totalPrice));
+                }
+                else{
+                    cartActivity_totalPrice-=dataInstance.getTotalprice();
+                    mCallback.onClick(cartActivity_totalPrice);
+                    Log.e("cartActivity",String.valueOf(cartActivity_totalPrice));
+                }
+            }
+        });
+        holder.iv_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child("Cart").child(firebaseUser.getUid()).child(dataInstance.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(context,"장바구니에서 삭제되었습니다.",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Log.e("error","error");
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return item.size();
+    }
+
+
+    public void set_total_price(int cartActivity_totalPrice){
+        this.cartActivity_totalPrice = cartActivity_totalPrice;
+    }
+    public int get_total_price(){
+        return cartActivity_totalPrice;
     }
 }

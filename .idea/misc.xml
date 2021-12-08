@@ -38,6 +38,7 @@
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/page.xml" value="0.152" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/menu/menu_bottom_nav.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable-v24/checked_heart.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable-v24/main_color_round.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/bottom_icon_color.xml" value="0.378125" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/cart_item.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_baseline_apps_24.xml" value="0.38229166666666664" />
@@ -50,6 +51,8 @@
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_home_24px.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/memo_border.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/round.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/rv_round.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/shadow_test.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/action_bar.xml" value="0.22" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_cart.xml" value="0.25" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_click_show.xml" value="0.22" />
@@ -69,6 +72,7 @@
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/listitem3.xml" value="0.2" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/page.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/search_item.xml" value="0.33" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/shadow_test.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/menu/menu_bottom_nav.xml" value="0.3619791666666667" />
       </map>
     </option>

@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Recycler.CartActivity">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_cancel_24"
+            android:layout_gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="장바구니"
         android:textSize="20sp"
+        android:layout_gravity="center"
         android:textStyle="bold"
+        android:layout_marginLeft="20dp"
         />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -92,6 +111,7 @@
             android:text="총 상품금액" />
 
         <TextView
+            android:id="@+id/cart_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
@@ -116,6 +136,7 @@
             android:text="총 결제예상금액" />
 
         <TextView
+            android:id="@+id/cart_total_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
@@ -135,3 +156,4 @@
     />
     </RelativeLayout>
 </LinearLayout>
+</androidx.core.widget.NestedScrollView>
