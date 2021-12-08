@@ -147,13 +147,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="구매하기"
-        android:background="@color/main_color"
-        android:layout_alignParentBottom="true"
-    />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/main_color"
+            android:text="구매하기" />
     </RelativeLayout>
 </LinearLayout>
 </androidx.core.widget.NestedScrollView>

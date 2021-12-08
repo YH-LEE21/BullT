@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
+            android:name=".Recycler.LatelyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Recycler.MyProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Recycler.ClickShowActivity"
             android:exported="false" />
         <activity

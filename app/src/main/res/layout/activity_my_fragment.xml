@@ -1,18 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragment.MyFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="  마이페이지"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        />
+    <ImageView
+        android:id="@+id/cart_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_shopping_cart_24px"
+        android:layout_margin="7dp"
+        android:background="?android:attr/selectableItemBackground"
+        />
+    </LinearLayout>
+    <Button
+        android:id="@+id/profile_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   BullT 로그인 및 회원가입"
+        android:textAlignment="textStart"
+        android:paddingVertical="30dp"
+        android:textSize="16sp"
+        android:background="@color/white"
+        android:textAllCaps="false"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   쇼핑"
+        android:paddingVertical="10dp"
+        />
+    <Button
+        android:id="@+id/myInquiry_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   문의 내역"
+        android:paddingVertical="20dp"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/myLately_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   최근 본 상품"
+        android:textSize="16sp"
+        android:paddingVertical="20dp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   고객센터"
+        android:paddingVertical="10dp"
+        />
+    <Button
+        android:id="@+id/myFAQ_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   FAQ"
+        android:paddingVertical="20dp"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/myNotice_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   공지사항"
+        android:textSize="16sp"
+        android:paddingVertical="20dp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   서비스 설정"
+        android:paddingVertical="10dp"
+        />
+    <Button
+        android:id="@+id/myLab_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   실험실"
+        android:paddingVertical="20dp"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/mySetting_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   설정"
+        android:textSize="16sp"
+        android:paddingVertical="20dp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <Button
+        android:id="@+id/appVersion_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   앱버전"
+        android:textSize="16sp"
+        android:paddingVertical="20dp"
+        android:textAlignment="textStart"
+        android:background="@color/white"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="   BullT는 상품에 직접 관여하지 않으며 상품 주문, 배송 및 환불의\n   의무와 책임은 각 판매업체에 있습니다."
+        android:paddingVertical="20dp"
+        />
     <Button
         android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@color/white"
+        android:textAlignment="textStart"
+        android:text="  logout"
+    />
+</LinearLayout>

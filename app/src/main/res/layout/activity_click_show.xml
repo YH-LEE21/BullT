@@ -253,7 +253,7 @@
             android:text="장바구니에 담기"
             android:layout_toRightOf="@id/button"
             android:textStyle="bold"
-            android:background="@color/main_color"
+            android:backgroundTint="@color/main_color"
             />
 
     </RelativeLayout>

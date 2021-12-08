@@ -9,22 +9,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                >
+                android:paddingVertical="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="28sp"
-                    android:text="BullT"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/vladimir_script_47992"
-                    android:textStyle="bold"
                     android:layout_weight="1"
-                    />
+                    android:fontFamily="@font/vladimir_script_47992"
+                    android:gravity="center"
+                    android:text="BullT"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <ImageView
                 android:id="@+id/search_iv"
