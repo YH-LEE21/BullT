@@ -62,7 +62,7 @@ public class ClickShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_show);
         cartData = new CartData();
-        cartData.setImgPath(getIntent().getStringExtra("imagePath"));
+        cartData.setImagePath(getIntent().getStringExtra("imagePath"));
         cartData.setContent(getIntent().getStringExtra("content"));
         cartData.setPrice(getIntent().getIntExtra("price",1));
         cartData.setTitle(getIntent().getStringExtra("title"));
@@ -242,7 +242,7 @@ public class ClickShowActivity extends AppCompatActivity {
         map.put("price",cartData.getPrice());
         map.put("size",cartData.getSize());
         map.put("id",cartData.getId());
-        map.put("imagePath",cartData.getImgPath());
+        map.put("imagePath",cartData.getImagePath());
         map.put("totalPrice",cartData.getTotalprice());
         map.put("count",cartData.getCount());
         return map;

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,7 +152,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         viewHolder.content.setText(content);
         viewHolder.price.setText(price1);
         StorageReference sref = FirebaseStorage.getInstance().getReference(item.get(position).getImagePath());
-        Log.d("레퍼런스", String.valueOf(ref));
+        Log.e("레퍼런스",ImagePath);
         sref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {

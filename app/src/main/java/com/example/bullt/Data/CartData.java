@@ -1,36 +1,36 @@
 package com.example.bullt.Data;
 
 public class CartData {
-    String imgPath;
+    String imagePath;
     String title;
     String content;
     int price;
     String size="S";
     int count=1;
-    int totalprice;
+    int totalPrice;
     String id;
 
     public CartData(){}
 
 
 
-    public CartData(String id, String imgPath, String title, String content, int price , String size, int count, int totalprice){
+    public CartData(String id, String imagePath, String title, String content, int price , String size, int count, int totalprice){
         this.id = id;
-        this.imgPath = imgPath;
+        this.imagePath = imagePath;
         this.title = title;
         this.content = content;
         this.price = price;
         this.size = size;
         this.count = count;
-        this.totalprice = totalprice;
+        this.totalPrice = totalPrice;
     }
 
-    public String getImgPath() {
-        return imgPath;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getTitle() {
@@ -73,11 +73,11 @@ public class CartData {
         this.count = count;
     }
     public int getTotalprice() {
-        return totalprice;
+        return totalPrice;
     }
 
-    public void setTotalprice(int totalprice) {
-        this.totalprice = totalprice;
+    public void setTotalprice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
     public String getId() {
         return id;
