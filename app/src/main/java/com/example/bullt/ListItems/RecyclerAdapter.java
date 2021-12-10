@@ -144,6 +144,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String price = dataInstance.getPrice()+"원";
         String price1 = formatter.format(dataInstance.getPrice())+"원";
         int count = dataInstance.getCount();
+        Boolean like = dataInstance.getLike();
         String imageID = dataInstance.getId();
         String ImagePath = dataInstance.getImagePath();
         String ref = dataInstance.getRef();
@@ -282,7 +283,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     // Unstar the post and remove self from stars
                     p.setCount(p.getCount()-1);
                     p.getHearts().remove(firebaseUser.getUid());
-
+                    p.setLike(false);
                     myRef.child("Favorite").child(firebaseUser.getUid()).child(p.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

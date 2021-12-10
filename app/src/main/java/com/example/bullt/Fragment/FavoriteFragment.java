@@ -1,11 +1,13 @@
 package com.example.bullt.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.R;
+import com.example.bullt.Recycler.CartActivity;
+import com.example.bullt.Recycler.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +35,7 @@ import java.util.Collections;
 
 public class FavoriteFragment extends Fragment{
     private View view;
+    private ImageView cart_iv,search_iv;
 //  작은바둑판,큰바둑판,수평정렬
     private ImageButton GridView3_ib,GridView2_ib,LinearV_ib;
     private RecyclerView favoriteRecyclerView;
@@ -44,7 +49,6 @@ public class FavoriteFragment extends Fragment{
         list_item = new ArrayList<>();
         getData();
         Setinit();
-
         return view;
     }
 
@@ -86,6 +90,24 @@ public class FavoriteFragment extends Fragment{
                 adapter = new RecyclerAdapter(getContext(),list_item,3);
                 favoriteRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        cart_iv = view.findViewById(R.id.cart_iv);
+        cart_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        search_iv = view.findViewById(R.id.search_iv);
+        search_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -1,11 +1,13 @@
 package com.example.bullt.Recycler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -48,7 +50,7 @@ public class SearchActivity extends AppCompatActivity implements OnItemClick1 {
     //옷,바지,신발,스웨터,패딩,액세서리
     Button clothes_btn,pants_btn,shoes_btn,sweater_btn,padding_btn,etc_btn;
     // ArrayList -> Json으로 변환
-
+    ImageButton back_ib;
     private static String SETTINGS_PLAYER_JSON;
 
     //아이템 리사이클뷰
@@ -86,6 +88,18 @@ public class SearchActivity extends AppCompatActivity implements OnItemClick1 {
 
     //  테이블레이아웃으로 만든 버튼 설정
     private void Setinit(){
+
+        back_ib = findViewById(R.id.back_ib);
+        back_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         clothes_btn = findViewById(R.id.clothes_btn);
 
         clothes_btn.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +147,6 @@ public class SearchActivity extends AppCompatActivity implements OnItemClick1 {
             }
         });
 
-        // TODO: 2021-12-04 SharedPreferences를 사용하여 검색기록중에 하나를 누르면 그내용을 searchView.setQuery해주기
     }
 
 

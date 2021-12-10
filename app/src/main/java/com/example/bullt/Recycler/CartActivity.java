@@ -6,9 +6,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bullt.Data.CartData;
 import com.example.bullt.Data.ItemData;
@@ -27,6 +33,8 @@ import java.util.Set;
 
 public class CartActivity extends AppCompatActivity implements OnItemClick {
 
+    private ImageView cancel_btn;
+    private Button allBuy_btn;
     private TextView cart_total_price,cart_total;
     private RecyclerView cartRecyclerView;
     private ArrayList<CartData> cart_item;
@@ -46,6 +54,22 @@ public class CartActivity extends AppCompatActivity implements OnItemClick {
     }
 
     private void Setinit(){
+        cancel_btn = findViewById(R.id.cancel_btn1);
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        allBuy_btn = findViewById(R.id.allBuy_btn);
+        allBuy_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),cart_total_price.getText().toString()+"이 결제 되었습니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
         cart_total_price = findViewById(R.id.cart_total_price);
         cart_total = findViewById(R.id.cart_total);
         cartRecyclerView = findViewById(R.id.cart_recyclerView);

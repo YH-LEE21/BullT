@@ -36,7 +36,7 @@ public class MyFragment extends Fragment {
     private FirebaseUser firebaseUser;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     ImageView cart_iv;
-    Button profile_btn,myInquiry_btn,myLately_btn,myNotice_btn,myLab_btn,mySetting_btn,appVersion_btn;
+    Button profile_btn,myInquiry_btn,myLately_btn,myFAQ_btn,myNotice_btn,myLab_btn,mySetting_btn,appVersion_btn;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_my_fragment, container, false);
@@ -98,6 +98,15 @@ public class MyFragment extends Fragment {
             }
         });
         myInquiry_btn = view.findViewById(R.id.myInquiry_btn);
+        myInquiry_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"문의 내역",Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        
+        
         myLately_btn = view.findViewById(R.id.myLately_btn);
         myLately_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +115,43 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        
+        myFAQ_btn = view.findViewById(R.id.myFAQ_btn);
+        myFAQ_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"FAQ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        
         myNotice_btn = view.findViewById(R.id.myNotice_btn);
+        myNotice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"공지사항",Toast.LENGTH_SHORT).show();
+            }
+        });
+        
         myLab_btn = view.findViewById(R.id.myLab_btn);
+        myLab_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"실험실",Toast.LENGTH_SHORT).show();
+            }
+        });
         mySetting_btn = view.findViewById(R.id.mySetting_btn);
+        mySetting_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"설정",Toast.LENGTH_SHORT).show();
+            }
+        });
         appVersion_btn = view.findViewById(R.id.appVersion_btn);
+        appVersion_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"앱버전",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

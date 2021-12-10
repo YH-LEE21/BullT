@@ -26,12 +26,10 @@
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_cart.xml" value="0.18055555555555555" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_click_show.xml" value="0.264" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_home_fragment.xml" value="0.24974358974358973" />
-        <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_lately.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_main2.xml" value="0.1296875" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_my_favorite_fragment.xml" value="0.1296875" />
-        <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_search.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/activity_search_fragment.xml" value="0.152" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/cartitem.xml" value="0.1" />
         <entry key="..\:/Users/82109/Documents/GitHub/BullT/app/src/main/res/layout/listitem.xml" value="0.4" />
@@ -51,22 +49,24 @@
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.378125" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_baseline_update_24.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_home_24px.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/ic_main_background.xml" value="0.1265625" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/memo_border.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/round.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/rv_round.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/drawable/shadow_test.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/action_bar.xml" value="0.22" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/action_bar.xml" value="0.5" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_cart.xml" value="0.25" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_click_show.xml" value="0.22" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_home_fragment.xml" value="0.25" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_lately.xml" value="0.15625" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_cart_fragment.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_favorite_fragment.xml" value="0.33" />
-        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_fragment.xml" value="0.18" />
-        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_profile.xml" value="0.15625" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_my_profile.xml" value="0.25" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_register.xml" value="0.18" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_search.xml" value="0.21" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_search_fragment.xml" value="0.22" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/activity_splash.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/cartitem.xml" value="0.25" />
@@ -77,11 +77,15 @@
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/page.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/search_item.xml" value="0.33" />
         <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/layout/shadow_test.xml" value="0.17083333333333334" />
-        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/menu/menu_bottom_nav.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/menu/menu_bottom_nav.xml" value="0.6231884057971014" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1671875" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1671875" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.1671875" />
+        <entry key="..\:/Users/lwscs/Desktop/android_subject/BullT/app/src/main/res/mipmap-anydpi-v26/ic_main_round.xml" value="0.1671875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

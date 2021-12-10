@@ -7,10 +7,25 @@
     tools:context=".Recycler.SearchActivity"
     android:orientation="vertical"
     >
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageButton
+                android:id="@+id/back_ib"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:layout_gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                />
         <SearchView
             android:id="@+id/SearchView1"
             android:layout_width="match_parent"
@@ -19,6 +34,7 @@
             android:iconifiedByDefault="false"
             tools:ignore="MissingConstraints"
             />
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="50dp"
             android:id="@+id/search_recyclerView"

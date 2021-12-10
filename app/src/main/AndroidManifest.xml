@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
@@ -27,17 +27,17 @@
         <activity android:name=".Recycler.LoginActivity" />
         <activity android:name=".Recycler.MainActivity" />
         <activity android:name=".Recycler.RegisterActivity" />
-        <activity
-            android:name=".Fragment.FavoriteFragment"
-            tools:ignore="Instantiatable" />
+<!--        <activity-->
+<!--            android:name=".Fragment.FavoriteFragment"-->
+<!--            tools:ignore="Instantiatable" />-->
+<!--        <activity-->
+<!--            android:name=".Fragment.MyFragment"-->
+<!--            tools:ignore="Instantiatable" />-->
+<!--        <activity-->
+<!--            android:name=".Fragment.HomeFragment"-->
+<!--            tools:ignore="Instantiatable" />-->
         <activity
             android:name=".Recycler.SearchActivity"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Fragment.MyFragment"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Fragment.HomeFragment"
             tools:ignore="Instantiatable" />
         <activity android:name=".Recycler.SplashActivity">
             <intent-filter>

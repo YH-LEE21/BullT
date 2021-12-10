@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.MyFragment">
+    tools:context=".Fragment.MyFragment"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingVertical="10dp"
+
+        android:background="@color/main_color"
         >
     <TextView
         android:layout_width="match_parent"

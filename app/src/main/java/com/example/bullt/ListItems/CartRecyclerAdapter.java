@@ -67,6 +67,13 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
             iv_cart = itemView.findViewById(R.id.iv_cart);
             iv_remove = itemView.findViewById(R.id.iv_remove);
             buy_btn = itemView.findViewById(R.id.buy_btn);
+
+            buy_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   Toast.makeText(context,tv_content.getText().toString()+", "+tv_sizeCount.getText().toString()+"가\n"+tv_price1.getText().toString()+"결제되었습니다.",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
