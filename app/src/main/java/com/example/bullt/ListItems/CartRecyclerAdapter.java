@@ -166,10 +166,4 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
     }
 
 
-    public void set_total_price(int cartActivity_totalPrice){
-        this.cartActivity_totalPrice = cartActivity_totalPrice;
-    }
-    public int get_total_price(){
-        return cartActivity_totalPrice;
-    }
 }

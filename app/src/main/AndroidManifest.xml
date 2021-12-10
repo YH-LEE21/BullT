@@ -31,7 +31,7 @@
             android:name=".Fragment.FavoriteFragment"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".Fragment.SearchFragment"
+            android:name=".Recycler.SearchActivity"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".Fragment.MyFragment"

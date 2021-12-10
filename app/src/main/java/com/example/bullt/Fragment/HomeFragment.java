@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.viewpager2.widget.ViewPager2;
 
 
@@ -25,7 +24,7 @@ import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.R;
 import com.example.bullt.Recycler.CartActivity;
-import com.example.bullt.Recycler.MainActivity;
+import com.example.bullt.Recycler.SearchActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,10 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -104,7 +100,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // getActivity()로 MainActivity의 replaceFragment를 불러온다
-                ((MainActivity)getActivity()).replaceFragment(SearchFragment.newInstance());
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
         //장바구니 버튼
@@ -243,7 +240,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) { //에러가 날때 작동
-            
+
             }
         });
     }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.R;
 import com.example.bullt.Recycler.CartActivity;
+import com.example.bullt.Recycler.LatelyActivity;
 import com.example.bullt.Recycler.LoginActivity;
 import com.example.bullt.Recycler.MyProfileActivity;
 import com.example.bullt.User;
@@ -98,6 +99,13 @@ public class MyFragment extends Fragment {
         });
         myInquiry_btn = view.findViewById(R.id.myInquiry_btn);
         myLately_btn = view.findViewById(R.id.myLately_btn);
+        myLately_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LatelyActivity.class);
+                startActivity(intent);
+            }
+        });
         myNotice_btn = view.findViewById(R.id.myNotice_btn);
         myLab_btn = view.findViewById(R.id.myLab_btn);
         mySetting_btn = view.findViewById(R.id.mySetting_btn);
