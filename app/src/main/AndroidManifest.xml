@@ -13,20 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
-            android:name=".Recycler.LatelyActivity"
+            android:name=".Activity.LatelyActivity"
             android:exported="false" />
         <activity
-            android:name=".Recycler.MyProfileActivity"
+            android:name=".Activity.MyProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Recycler.ClickShowActivity"
+            android:name=".Activity.ClickShowActivity"
             android:exported="false" />
         <activity
-            android:name=".Recycler.CartActivity"
+            android:name=".Cart.CartActivity"
             android:exported="false" />
-        <activity android:name=".Recycler.LoginActivity" />
-        <activity android:name=".Recycler.MainActivity" />
-        <activity android:name=".Recycler.RegisterActivity" />
+        <activity android:name=".Login_Register.LoginActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Login_Register.RegisterActivity"/>
+
+
 <!--        <activity-->
 <!--            android:name=".Fragment.FavoriteFragment"-->
 <!--            tools:ignore="Instantiatable" />-->
@@ -37,9 +39,9 @@
 <!--            android:name=".Fragment.HomeFragment"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".Recycler.SearchActivity"
+            android:name=".Search.SearchActivity"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Recycler.SplashActivity">
+        <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

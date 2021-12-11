@@ -1,4 +1,4 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,27 +19,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.bullt.Data.CartData;
+import com.example.bullt.Cart.CartActivity;
+import com.example.bullt.Cart.CartData;
+import com.example.bullt.Login_Register.LoginActivity;
 import com.example.bullt.R;
+import com.example.bullt.Search.SearchActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+
+//아이템 클릭시 보이는 거
 public class ClickShowActivity extends AppCompatActivity {
-    ImageView imageView;
+    ImageView imageView,cart_iv,search_iv;
     TextView contentTop_tv,content_tv,price_tv,title_tv, total_price;
     ImageButton countUp_ib,countDown_ib;
     EditText count_et;
@@ -77,6 +75,23 @@ public class ClickShowActivity extends AppCompatActivity {
     }
 
     private void setInit(){
+
+        cart_iv = findViewById(R.id.cart_iv);
+        cart_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ClickShowActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+        search_iv = findViewById(R.id.search_iv);
+        search_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ClickShowActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         imageView = findViewById(R.id.imageView);
         refFirebase();
@@ -180,7 +195,7 @@ public class ClickShowActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(ClickShowActivity.this,LoginActivity.class);
+                            Intent intent = new Intent(ClickShowActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                             Toast.makeText(getApplicationContext(),"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();

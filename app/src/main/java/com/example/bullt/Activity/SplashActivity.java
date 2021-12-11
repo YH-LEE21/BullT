@@ -1,4 +1,4 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

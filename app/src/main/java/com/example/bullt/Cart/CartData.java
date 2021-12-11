@@ -1,4 +1,4 @@
-package com.example.bullt.Data;
+package com.example.bullt.Cart;
 
 public class CartData {
     String imagePath;

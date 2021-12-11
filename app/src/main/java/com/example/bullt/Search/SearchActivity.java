@@ -1,4 +1,4 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.R;
-import com.example.bullt.Search.OnItemClick1;
-import com.example.bullt.Search.RecyclerSearchAdapter;
+import com.example.bullt.Activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,7 +92,7 @@ public class SearchActivity extends AppCompatActivity implements OnItemClick1 {
         back_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }

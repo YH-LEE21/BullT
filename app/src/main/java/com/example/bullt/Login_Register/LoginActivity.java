@@ -1,50 +1,43 @@
-package com.example.bullt.Recycler;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.bullt.Login_Register;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.bullt.Fragment.HomeFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bullt.Activity.MainActivity;
 import com.example.bullt.R;
+import com.example.bullt.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 // 기능 정리
-//email,password 입력하면 로그인
-//        email 입력양식으로 입력하지 않으면 에러
-//        password 8자리 앞자리 숫자 x,특수문자 포함
-//로그인 버튼 성공하면 메인 페이지로 이동 실패시 alertDialog창
-//아이디 비밀번호 찾기는 천천히 구현
 
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 //  아이디,패스워드,
     EditText login_email_et,login_pwd_et;
 //  패스워드 보이기
@@ -103,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+
                     finish();
                 } else {
                 }
@@ -116,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         register_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,7 +142,17 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // 로그인 성공
-                            Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+                            database.getReference("users").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    User a = snapshot.getValue(User.class);
+                                        Toast.makeText(getApplicationContext(),a.getName()+ "님 환영합니다.",Toast.LENGTH_SHORT).show();
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             firebaseAuth.addAuthStateListener(firebaseAuthListener);
                         } else {
                             // 로그인 실패

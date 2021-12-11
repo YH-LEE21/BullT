@@ -14,15 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.bullt.Data.ItemData;
+import com.example.bullt.Login_Register.LoginActivity;
 import com.example.bullt.R;
-import com.example.bullt.Recycler.CartActivity;
-import com.example.bullt.Recycler.LatelyActivity;
-import com.example.bullt.Recycler.LoginActivity;
-import com.example.bullt.Recycler.MyProfileActivity;
+import com.example.bullt.Cart.CartActivity;
+import com.example.bullt.Activity.LatelyActivity;
+import com.example.bullt.Activity.MyProfileActivity;
 import com.example.bullt.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -92,7 +89,7 @@ public class MyFragment extends Fragment {
                     startActivity(intent);
                 }catch (Exception e){
                     //로그인이 안되있다면
-                    Intent intent = new Intent(getContext(),LoginActivity.class);
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
                 }
             }

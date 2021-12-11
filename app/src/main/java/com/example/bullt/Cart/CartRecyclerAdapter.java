@@ -1,4 +1,4 @@
-package com.example.bullt.ListItems;
+package com.example.bullt.Cart;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.bullt.Data.CartData;
-import com.example.bullt.Data.ItemData;
 import com.example.bullt.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

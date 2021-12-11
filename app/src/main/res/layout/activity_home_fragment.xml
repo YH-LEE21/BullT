@@ -50,7 +50,8 @@
             android:layout_margin="5dp"
             android:layout_height="wrap_content"
             android:stretchColumns="*"
-            android:paddingTop="20dp"
+            android:paddingVertical="10dp"
+            android:gravity="center_vertical"
             android:background="@drawable/round"
             android:backgroundTint="@color/main_color"
             >
@@ -59,7 +60,7 @@
                     android:id="@+id/recyclerView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center"
                     />
             </TableRow>
             </TableLayout>

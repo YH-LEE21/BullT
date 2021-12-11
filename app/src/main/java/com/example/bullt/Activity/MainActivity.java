@@ -1,4 +1,4 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,6 +15,7 @@ import com.example.bullt.Fragment.FavoriteFragment;
 import com.example.bullt.Fragment.HomeFragment;
 import com.example.bullt.Fragment.MyFragment;
 import com.example.bullt.R;
+import com.example.bullt.Search.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
                     break;
                 case R.id.nav_search:
-                    Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.nav_favorite:

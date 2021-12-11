@@ -8,29 +8,32 @@
     >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp">
+                android:gravity="center_vertical"
+
+                android:paddingVertical="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/vladimir_script_47992"
                     android:gravity="center"
                     android:text="BullT"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMaxTextSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
             <ImageView
                 android:id="@+id/search_iv"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@drawable/ic_baseline_search_24"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
@@ -39,8 +42,8 @@
                 />
             <ImageView
                 android:id="@+id/cart_iv"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@drawable/ic_shopping_cart_24px"
                 android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"

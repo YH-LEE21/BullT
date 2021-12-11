@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Fragment.MyFragment"
     >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:orientation="horizontal"
-
         android:background="@color/main_color"
         >
     <TextView
@@ -27,10 +29,11 @@
         />
     <ImageView
         android:id="@+id/cart_iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
         android:src="@drawable/ic_shopping_cart_24px"
         android:layout_margin="7dp"
+        android:layout_gravity="center"
         android:background="?android:attr/selectableItemBackground"
         />
     </LinearLayout>
@@ -157,12 +160,5 @@
         android:text="   BullT는 상품에 직접 관여하지 않으며 상품 주문, 배송 및 환불의\n   의무와 책임은 각 판매업체에 있습니다."
         android:paddingVertical="20dp"
         />
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:textAlignment="textStart"
-        android:text="  logout"
-    />
 </LinearLayout>
+</androidx.core.widget.NestedScrollView>

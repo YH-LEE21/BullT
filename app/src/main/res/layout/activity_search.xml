@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Recycler.SearchActivity"
+    tools:context=".Search.SearchActivity"
     android:orientation="vertical"
     >
 
@@ -42,24 +42,27 @@
             android:layout_height="wrap_content"
             />
     </FrameLayout>
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:stretchColumns="*"
         android:background="@drawable/bottom_round"
         android:backgroundTint="@color/main_color"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
+        >
+        <TableRow
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            >
             <Button
                 android:id="@+id/clothes_btn"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/round"
+                android:layout_marginLeft="20dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
                 android:text="clothes" />
 
             <Button
@@ -68,6 +71,10 @@
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="45dp"
                 android:background="@drawable/round"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
                 android:text="pants" />
 
             <Button
@@ -75,23 +82,30 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/round"
-                android:text="shoes" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
+                android:text="shoes"
+                android:layout_marginRight="20dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
             >
             <Button
                 android:id="@+id/sweater_btn"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/round"
-                android:text="sweather" />
+                android:text="sweater"
+                android:layout_marginLeft="20dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
+                />
 
             <Button
                 android:id="@+id/padding_btn"
@@ -99,16 +113,30 @@
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="45dp"
                 android:background="@drawable/round"
-                android:text="padding" />
+                android:text="padding"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
+
+                />
 
             <Button
                 android:id="@+id/etc_btn"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/round"
-                android:text="etc" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_marginRight="20dp"
+                android:text="etc"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeStepGranularity="5sp"
+                />
+        </TableRow>
+
+    </TableLayout>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

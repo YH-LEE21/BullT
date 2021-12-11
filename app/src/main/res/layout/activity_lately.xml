@@ -58,14 +58,11 @@
             />
     </LinearLayout>
 
-
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
+        android:layout_height="match_parent"
         >
-        <TableRow>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/Lately_RecyclerView"
                 android:layout_width="match_parent"
@@ -74,6 +71,5 @@
                 android:overScrollMode="never"
                 android:background="?android:attr/selectableItemBackground"
                 />
-        </TableRow>
-    </TableLayout>
+    </LinearLayout>
 </LinearLayout>

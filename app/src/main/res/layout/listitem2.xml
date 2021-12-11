@@ -1,61 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     >
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
 
         <ImageView
             android:id="@+id/iv_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+
         <ToggleButton
             android:id="@+id/favorite_btn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignBottom="@+id/iv_main"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"
-            android:textOff=" "
-            android:textOn=" "
-            android:checked="false"
+            android:layout_alignRight="@id/iv_main"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/unchecked_heart"
-
-
-            />
+            android:checked="false"
+            android:textOff=" "
+            android:textOn=" " />
     </RelativeLayout>
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
         android:text="상품 이름"
-        android:textSize="16sp"
-        android:layout_marginTop="3dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         />
     <TextView
         android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
         android:text="상품 종류(옷,바지,신발)"
-        android:textSize="16sp"
-        android:layout_marginVertical="3dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="2sp"
         android:layout_marginLeft="10dp"
         />
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
         android:textStyle="bold"
         android:text="33000원"
         android:layout_marginLeft="10dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="2sp"
         />
+
 </LinearLayout>

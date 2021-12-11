@@ -1,8 +1,7 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Cart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,16 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bullt.Data.CartData;
-import com.example.bullt.Data.ItemData;
-import com.example.bullt.ListItems.CartRecyclerAdapter;
-import com.example.bullt.ListItems.OnItemClick;
 import com.example.bullt.R;
+import com.example.bullt.Activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Set;
 
+//장바구니
 public class CartActivity extends AppCompatActivity implements OnItemClick {
 
     private ImageView cancel_btn;
@@ -58,7 +53,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClick {
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this,MainActivity.class);
+                Intent intent = new Intent(CartActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

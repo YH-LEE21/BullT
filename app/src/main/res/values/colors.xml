@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    #F5E4C8
-    <color name="main_color">#A6B8C4</color>
+    #F5E4C8#6F4E2F#A6B8C4#CA904F#CCA973
+    <color name="main_color">#CCA973</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

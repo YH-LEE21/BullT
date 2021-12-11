@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +20,15 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.bullt.Data.ItemData;
+import com.example.bullt.Login_Register.LoginActivity;
 import com.example.bullt.R;
-import com.example.bullt.Recycler.ClickShowActivity;
-import com.example.bullt.Recycler.LoginActivity;
+import com.example.bullt.Activity.ClickShowActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,9 +44,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.HashMap;
-import java.util.Map;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private Context context;
@@ -109,18 +105,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //크기 조절
         if(i == 1){
             view = inflater.inflate(R.layout.listitem,parent,false);
-            //크기 조절
             layoutParams = view.getLayoutParams();
-            layoutParams.width = 305;
-            layoutParams.height = 550;
-
         }
         else if(i == 2){
             view = inflater.inflate(R.layout.listitem2,parent,false);
-            //크기 조절
             layoutParams = view.getLayoutParams();
-            layoutParams.width = 500;
-            layoutParams.height = 800;
 
         }
         else if(i == 3){
@@ -165,7 +154,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             .load(task.getResult())
                             .fitCenter()
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
-                            .placeholder(R.drawable.round)
                             .into(viewHolder.imageView);
                 }
             }
@@ -244,7 +232,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context,LoginActivity.class);
+                            Intent intent = new Intent(context, LoginActivity.class);
                             context.startActivity(intent);
                             Toast.makeText(context,"로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
                         }
@@ -283,7 +271,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     // Unstar the post and remove self from stars
                     p.setCount(p.getCount()-1);
                     p.getHearts().remove(firebaseUser.getUid());
-                    p.setLike(false);
                     myRef.child("Favorite").child(firebaseUser.getUid()).child(p.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -293,6 +280,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             }
                         }
                     });
+
                 } else {
                     // Star the post and add self to stars
                     p.setCount(p.getCount() + 1);

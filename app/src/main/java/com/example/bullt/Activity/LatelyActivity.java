@@ -1,4 +1,4 @@
-package com.example.bullt.Recycler;
+package com.example.bullt.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,27 +11,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.bullt.Data.ItemData;
 import com.example.bullt.Fragment.MyFragment;
 import com.example.bullt.ListItems.RecyclerAdapter;
 import com.example.bullt.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class LatelyActivity extends AppCompatActivity {
 
+//최근 본 페이지
+
+public class LatelyActivity extends AppCompatActivity {
     private ImageButton back_btn,GridView3_ib1,GridView2_ib1,LinearV_ib1;
     private RecyclerView lately_RecyclerView;
     private ArrayList<ItemData> list_item;
@@ -39,11 +36,14 @@ public class LatelyActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private RecyclerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lately);
         list_item = new ArrayList<>();
+        ToggleButton bb = findViewById(R.id.favorite_btn);
+
         getData();
         Setinit();
 
@@ -55,13 +55,27 @@ public class LatelyActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LatelyActivity.this, MyFragment.class);
+                Intent intent = new Intent(LatelyActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
         lately_RecyclerView = findViewById(R.id.Lately_RecyclerView);
-        lately_RecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),4);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int gridPosition = position % 3;
+                switch (gridPosition) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        return 1;
+                }
+                return 0;
+            }
+        });
+        lately_RecyclerView.setLayoutManager(gridLayoutManager);
         adapter = new RecyclerAdapter(getApplicationContext(),list_item,1);
         lately_RecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -70,7 +84,21 @@ public class LatelyActivity extends AppCompatActivity {
         GridView3_ib1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lately_RecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),4);
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        int gridPosition = position % 3;
+                        switch (gridPosition) {
+                            case 0:
+                            case 1:
+                            case 2:
+                                return 1;
+                        }
+                        return 0;
+                    }
+                });
+                lately_RecyclerView.setLayoutManager(gridLayoutManager);
                 adapter = new RecyclerAdapter(getApplicationContext(),list_item,1);
                 lately_RecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
@@ -81,7 +109,20 @@ public class LatelyActivity extends AppCompatActivity {
         GridView2_ib1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lately_RecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),3);
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        int gridPosition = position % 2;
+                        switch (gridPosition) {
+                            case 0:
+                            case 1:
+                                return 1;
+                        }
+                        return 0;
+                    }
+                });
+                lately_RecyclerView.setLayoutManager(gridLayoutManager);
                 adapter = new RecyclerAdapter(getApplicationContext(),list_item,2);
                 lately_RecyclerView.setAdapter(adapter);
 
