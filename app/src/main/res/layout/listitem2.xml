@@ -1,46 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round"
         >
 
         <ImageView
             android:id="@+id/iv_main"
             android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="150dp" />
 
         <ToggleButton
             android:id="@+id/favorite_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignRight="@id/iv_main"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignBottom="@+id/iv_main"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_alignRight="@id/iv_main"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/unchecked_heart"
             android:checked="false"
             android:textOff=" "
-            android:textOn=" "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textOn=" " />
+    </RelativeLayout>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -51,7 +41,7 @@
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="10dp"
         />
     <TextView
         android:id="@+id/tv_content"
@@ -62,7 +52,7 @@
         android:autoSizeMinTextSize="10sp"
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="2sp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="10dp"
         />
     <TextView
         android:id="@+id/tv_price"
@@ -70,11 +60,11 @@
         android:layout_height="16dp"
         android:textStyle="bold"
         android:text="33000원"
+        android:layout_marginLeft="10dp"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="10sp"
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="2sp"
-        android:layout_marginLeft="3dp"
         />
 
 </LinearLayout>

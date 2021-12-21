@@ -1,7 +1,5 @@
 package com.example.bullt.Activity;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -112,17 +110,37 @@ public class MyProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //유저 정보 삭제
-                        try{
-                            removeUserData();
-                            Intent intent = new Intent(MyProfileActivity.this,MainActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(MyProfileActivity.this,"회원탈퇴가 완료 되었습니다.",Toast.LENGTH_SHORT).show();
-                            finish();
-                        }catch (Exception e){
-                            Toast.makeText(getApplicationContext(),"회원 탈퇴가 정상적으로 되지않았습니다.\n 관리자에게 문의해 보세요",Toast.LENGTH_SHORT).show();
-                        }
+                        //회원관련된 모든기록을 삭제
 
+                        firebaseDatabase.getReference().child("Favorite").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                data.clear();
+                                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    ItemData dd = dataSnapshot.getValue(ItemData.class);
+                                    onStarClicked(firebaseDatabase.getReference("ListItem").child(dd.getId()));
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("asdfasdf","실패");
+                            }
+                        });
+                        //좋아요한 LIST,장바구니 CART,최근조회 목록,유저정보
+                        firebaseDatabase.getReference().child("Favorite").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                        firebaseDatabase.getReference().child("Cart").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                        firebaseDatabase.getReference().child("Lately").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                        firebaseDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                        firebaseAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        });
+                        Intent intent = new Intent(MyProfileActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(MyProfileActivity.this,"회원탈퇴가 완료 되었습니다.",Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
                 dlg.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
@@ -160,44 +178,5 @@ public class MyProfileActivity extends AppCompatActivity {
                                    DataSnapshot currentData) {
             }
         });
-    }
-
-    //유저 정보 삭제
-    private void removeUserData(){
-        String uid =firebaseUser.getUid();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //유저
-        firebaseAuth.signOut();
-        //유저 정보 모두삭제
-        firebaseUser.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User account deleted.");
-
-                            firebaseDatabase.getReference().child("Favorite").child(uid).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    data.clear();
-                                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        ItemData dd = dataSnapshot.getValue(ItemData.class);
-                                        onStarClicked(firebaseDatabase.getReference("ListItem").child(dd.getId()));
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Log.e("asdfasdf","실패");
-                                }
-                            });
-                            //좋아요한 LIST,장바구니 CART,최근조회 목록,유저정보
-
-                            firebaseDatabase.getReference().child("Favorite").child(uid).removeValue();
-                            firebaseDatabase.getReference().child("Cart").child(uid).removeValue();
-                            firebaseDatabase.getReference().child("Lately").child(uid).removeValue();
-                            firebaseDatabase.getReference().child("users").child(uid).removeValue();
-                        }
-                    }
-                });
     }
 }

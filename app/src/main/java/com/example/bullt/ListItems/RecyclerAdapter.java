@@ -57,6 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     FirebaseAuth firebaseAuth;
     FirebaseStorage storage;
     DatabaseReference myRef;
+
     DecimalFormat formatter = new DecimalFormat("###,###");
     //레이아웃크기를 상황에 맞게 바꿔주기위한 변수
     int i;
@@ -132,12 +133,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String content = dataInstance.getContent();
         String price = dataInstance.getPrice()+"원";
         String price1 = formatter.format(dataInstance.getPrice())+"원";
-        int count = dataInstance.getCount();
-        Boolean like = dataInstance.getLike();
         String imageID = dataInstance.getId();
         String ImagePath = dataInstance.getImagePath();
         String ref = dataInstance.getRef();
-        String search = dataInstance.getSearch();
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
         viewHolder.price.setText(price1);
@@ -168,14 +166,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View v) {
 //              최근에 본 아이템
-                HashMap<String,Object> favorite = new HashMap<>();
-                favorite.put("title",title);
-                favorite.put("content",content);
-                favorite.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
-                favorite.put("ref",ref);
-                favorite.put("id",imageID);
-                favorite.put("like",true);
-                favorite.put("imagePath",ImagePath);
+                HashMap<String,Object> lately = new HashMap<>();
+                lately.put("title",title);
+                lately.put("content",content);
+                lately.put("price",Integer.parseInt(price.substring(0,price.length()-1)));
+                lately.put("ref",ref);
+                lately.put("id",imageID);
+                lately.put("like",true);
+                lately.put("imagePath",ImagePath);
+
+
                 Intent intent = new Intent(context, ClickShowActivity.class);
                 intent.putExtra("title",dataInstance.getTitle());
                 intent.putExtra("content",dataInstance.getContent());
@@ -183,21 +183,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 intent.putExtra("id",dataInstance.getId());
                 intent.putExtra("ref",dataInstance.getRef());
                 intent.putExtra("imagePath",dataInstance.getImagePath());
-                try {
-                    context.startActivity(intent);
-                }catch (Exception e){
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
+                context.startActivity(intent);
+
                 //Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(ref));
                 //context.startActivity(intent);
                 try{//firebaseUser.getUid가 없을수 있기때문에 예외처리를 해준다.
-                    myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(favorite).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    myRef.child("Lately").child(firebaseUser.getUid()).child(imageID).setValue(lately).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                             }else{
-                                Toast.makeText(context,"Lately",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"Lately Fail",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -212,7 +208,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         try {
             if(item.get(position).getHearts().containsKey(firebaseAuth.getCurrentUser().getUid())){
                 viewHolder.like.setBackgroundResource(R.drawable.checked_heart);
-
             }
             else{
                 viewHolder.like.setBackgroundResource(R.drawable.unchecked_heart);
@@ -249,7 +244,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     });
                     dlg.show();
                 }
-
             }
         });
 

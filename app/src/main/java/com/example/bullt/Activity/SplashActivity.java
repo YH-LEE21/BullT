@@ -16,6 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         Handler handler = new Handler();
 
+        //3초뒤에 이동
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

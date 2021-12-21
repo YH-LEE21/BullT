@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -46,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     Button loginSubmit_btn;
 //  아이디/비밀번호 , 회원가입
     TextView research_idPwd_tv,register_tv;
+// main activity로 돌아가는 버튼
+    ImageView comeBackHome_iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SetInit();
     }
-//  아이디 연결
     public void SetInit(){
+
+        //이메일 입력 EditText,
         login_email_et = findViewById(R.id.login_email);
         login_email_et.requestFocus();
 
@@ -102,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-
         research_idPwd_tv = findViewById(R.id.research_idPwd);
         
         //회원가입텍스트
@@ -114,10 +117,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //홈 이미지
+        comeBackHome_iv = findViewById(R.id.comeBackHome_iv);
+        comeBackHome_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
-
-
-
 
     @Override
     protected void onStart() {
@@ -161,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
     @Override
     protected void onStop() {
         super.onStop();

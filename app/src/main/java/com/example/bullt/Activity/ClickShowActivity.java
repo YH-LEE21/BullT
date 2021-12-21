@@ -38,6 +38,7 @@ import java.util.HashMap;
 
 
 //아이템 클릭시 보이는 거
+
 public class ClickShowActivity extends AppCompatActivity {
     ImageView imageView,cart_iv,search_iv;
     TextView contentTop_tv,content_tv,price_tv,title_tv, total_price;

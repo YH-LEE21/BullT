@@ -18,9 +18,12 @@ import com.example.bullt.R;
 import com.example.bullt.Search.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+//메인 프레그먼트 쓰인곳
+
 public class MainActivity extends AppCompatActivity {
     String userEmail;
     private long backKeyPressedTime = 0;
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private HomeFragment homeFragment = new HomeFragment();
     private FavoriteFragment favoriteFragment = new FavoriteFragment();
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_my:
                     transaction.replace(R.id.frameLayout, myFragment).commitAllowingStateLoss();
                     break;
-
             }
             return true;
         }

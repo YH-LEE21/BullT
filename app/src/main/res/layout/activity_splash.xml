@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SplashActivity"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/main_color"
     android:gravity="center"
     >
     <TextView

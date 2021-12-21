@@ -71,7 +71,6 @@ public class BannerPagerAdapter extends RecyclerView.Adapter<BannerPagerAdapter.
 
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(iv_ads.getTag().toString()));
                     context.startActivity(intent);
-//                    context.startActivity(intent);
                 }
             });
         }

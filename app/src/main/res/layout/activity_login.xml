@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LoginActivity"
+    tools:context=".Login_Register.LoginActivity"
     >
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -133,6 +132,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.903"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginSubmit" />
+
+    <ImageView
+        android:id="@+id/comeBackHome_iv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_baseline_home1_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginSubmit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

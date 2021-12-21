@@ -216,7 +216,6 @@ public class SearchActivity extends AppCompatActivity implements OnItemClick1 {
                 SearchRecyclerView.setVisibility(View.GONE);
                 return true;
             }
-
             public boolean onQueryTextChange(String newText) {
                 return true;
             }
