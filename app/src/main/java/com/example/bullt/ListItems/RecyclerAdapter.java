@@ -183,12 +183,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 intent.putExtra("id",dataInstance.getId());
                 intent.putExtra("ref",dataInstance.getRef());
                 intent.putExtra("imagePath",dataInstance.getImagePath());
-                try {
-                    context.startActivity(intent);
-                }catch (Exception e){
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
+                context.startActivity(intent);
+
                 //Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(ref));
                 //context.startActivity(intent);
                 try{//firebaseUser.getUid가 없을수 있기때문에 예외처리를 해준다.
