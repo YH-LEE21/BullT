@@ -42,7 +42,6 @@
         android:background="#80777777"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recyclerView"
         android:layout_width="match_parent"
@@ -148,9 +147,7 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <Button
             android:id="@+id/allBuy_btn"
@@ -160,6 +157,5 @@
             android:background="@drawable/round"
             android:backgroundTint="@color/main_color"
             android:text="구매하기" />
-    </RelativeLayout>
 </LinearLayout>
 </androidx.core.widget.NestedScrollView>
