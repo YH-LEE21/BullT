@@ -1,4 +1,4 @@
-<!--# BullT(쇼핑몰 앱)
+# BullT(쇼핑몰 앱) from JAVA
 
 ### 사진 설명 순서 →
 * 스플래쉬 화면
@@ -40,8 +40,8 @@
 
 <img src ="./Gallery/10.jpg" width="300"> <img src ="./Gallery/11.jpg" width="300"> <img src ="./Gallery/12.jpg" width="300">
 <img src ="./Gallery/13.jpg" width="300"> <img src ="./Gallery/14.jpg" width="300">
--->
 
+<!--
 # BullT(ショッピングモールアプリ)
 
 ### 写真の説明手順 →
@@ -84,3 +84,4 @@
 
 <img src ="./Gallery/10.jpg" width="300"> <img src ="./Gallery/11.jpg" width="300"> <img src ="./Gallery/12.jpg" width="300">
 <img src ="./Gallery/13.jpg" width="300"> <img src ="./Gallery/14.jpg" width="300">
+-->
